@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Resturant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style type="text/css">
+      body{width: 100%;
+        font-weight: bold;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),url(R.jpg);
+    background-size: cover;
+    background-position:center ;
+
+background-repeat: no-repeat;
+}
+
+.custom-btn { margin: 10px;
+padding: 15px;
+padding-left: 5px;
+  color:  #fff;
+  border-radius: 25px;
+  border: 1px solid #983800;
+  width: 230px;
+  transition: 0.5s;
+  font-size: 20px;
+
+
+
+}
+.custom-btn:hover, .custom-btn:focus {
+  box-shadow: inset 230px 0 0 0  #983800;
+  color: #fff;font-size: 25px;
+  
+}
+.nav-item  {color:  white;
+  border-radius: 25px;
+  border: 1px solid #983800;
+  width: 150px;text-align: center;}
+.dropdown-menu{color:  white;
+  border-radius: 10px;
+  border: 1px solid #983800;
+  width: 150px;text-align: center;
+}
+
+.middle{
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%,-50%);}
+  .btnn{
+  position: relative;
+  display: block;
+  color: white;
+  font-size: 14px;
+  
+  text-decoration: none;
+  margin: 30px 0;
+  border: 2px solid #983800;
+  padding: 14px 60px;
+ border-radius: 25px;
+  overflow: hidden;
+  transition: 1s all ease;
+}
+.btnn::before{
+  background: #983800;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: -1;
+  transition: all 0.6s ease;
+}
+.btn4::before{
+  width: 100%;
+  height: 0%;
+  transform: translate(-50%,-50%) rotate(-45deg);
+}
+.btn4:hover::before{
+  height: 380%;
+}
+
+
+    </style>
+  </head>
+  <body>
+
+
+<nav class="navbar navbar-expand-lg bg-###" style="background: rgba(0,0,0,0);">
+  <div class="container">
+    <a class="navbar-brand text-white" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      
+       
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            اللغة
+          </a>
+          <ul class="dropdown-menu">
+             <li><a class="dropdown-item" href="n.html">کوردی</a></li>
+            <li><a class="dropdown-item" href="nn.html">عربي</a></li>
+            <li><a class="dropdown-item" href="nanwk.html">Englsh</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row text-center mt-8 pt-5">
+    <div class="col">
+      <h1 class="text-white">مر‌حبا بکم إلا مطعمنا</h1>
+    </div>
+  </div>
+
+  <div class="row">
+  <div class="col text-center mt-3">
+    <a href="login.html" class="btn custom-btn">إدارة</a>
+         <a class="btn custom-btn" href="aindex.html">المطعم</a>
+  </div>
+</div>
+<div class="About" >
+  <div class="row">
+  <div class="col text-center mt-3">
+    <div class="middle">
+            <a href="" class="btnn btn4">لمحة عنا</a>
+    </div>
+  </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>

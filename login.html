@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>Login Page</title>
+        <link rel="stylesheet" href="login.css">
+    </head>
+    <body>
+        <div class="form_box">
+            <form> 
+                <h2>Log In Here</h2>
+                <p>Email</p>
+                <input type="email" name="email" id="email" placeholder="User Id">
+                <p>Password</p>
+                <input type="password" name="password" id="password" placeholder="Enter Password">
+                <input type="submit" value="Log In" onclick="auth()">
+                <a href="##">Forget Password</a>
+            </form>
+        </div>
+
+        <script>
+            
+            function auth(){
+                  var email = document.getElementById("email").value;
+                  var password = document.getElementById("password").value;
+                  if(email == "abdulkhalq@gmail.com" && password == "abdulkhalq"){
+                    window.location.href = "mailto:abdulkhalqkhoshnaw94@gmail.com?subject=Subject&body=message%20goes%20here";
+                    alert("login successfully");
+                  }
+                  else{
+                alert("invalid information");
+            }
+            
+        }
+        </script>
+    </body>
+</html>
