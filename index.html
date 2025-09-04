@@ -6,6 +6,7 @@
     <title>سیستەمی غیاباتی قوتابیان - بەڕێوەبردن</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --main-purple: #6a0dad; /* مۆری سەرەکی */
@@ -26,6 +27,7 @@
             direction: rtl;
             text-align: right;
             min-height: 100vh;
+            color: aliceblue;
         }
 
         .container {
@@ -37,6 +39,7 @@
             padding: 20px;
             border-radius: 20px;
             box-shadow: 0 0 30px var(--main-purple);
+            color: aliceblue;
         }
 
         .university-header {
@@ -44,6 +47,8 @@
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 3px solid var(--main-purple);
+            color: aliceblue;
+
         }
 
         .university-header img {
@@ -53,12 +58,14 @@
             border: 5px ridge var(--main-purple);
             object-fit: cover;
             margin-bottom: 15px;
+            color: aliceblue;
         }
 
         h1, h2, h3 {
             color: var(--white);
             text-shadow: 0 0 10px var(--main-purple);
             font-family: 'Times New Roman', serif;
+            color: aliceblue;
         }
 
         .table {
@@ -66,6 +73,7 @@
             border-collapse: collapse;
             margin: 20px 0;
             box-shadow: 0 0 20px var(--main-purple);
+            color: aliceblue;
         }
 
         .table th {
@@ -73,12 +81,14 @@
             color: white;
             padding: 12px;
             text-align: center;
+            color: aliceblue;
         }
 
         .table td {
             padding: 10px;
             border-bottom: 1px solid var(--main-purple);
             text-align: center;
+            color: aliceblue;
         }
 
         .table tr:nth-child(even) {
@@ -195,6 +205,42 @@
             margin-bottom: 20px;
         }
 
+        /* ستایلی نوێ بۆ تابەکانی غیاب */
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px ridge var(--light-purple);
+        }
+
+        .warning-badge {
+            background-color: #ffcc00;
+            color: black;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .danger-badge {
+            background-color: #ff3333;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .filter-section {
+            background-color: rgba(75, 0, 130, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -209,6 +255,14 @@
             .btn {
                 padding: 8px 15px;
                 font-size: 12px;
+            }
+
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                margin-bottom: 5px;
             }
         }
     </style>
@@ -226,6 +280,7 @@
             <div class="tab-buttons">
                 <button class="tab-btn active" onclick="showTab('loginTab')">چوونەژوورەوە</button>
                 <button class="tab-btn" onclick="showTab('adminTab')">بەڕێوەبردن</button>
+                <button class="tab-btn" onclick="showTab('attendanceTab')">ئاگاداری غیاب</button>
             </div>
 
             <div id="loginTab" class="tab-content active">
@@ -268,6 +323,91 @@
                     </table>
                 </div>
             </div>
+
+            <div id="attendanceTab" class="tab-content">
+                <h2 class="text-center">ئاگاداری غیاباتی قوتابیان</h2>
+                
+                <div class="filter-section">
+                    <h3>فیلتەرکردن</h3>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="filterStage">قۆناغ:</label>
+                                <select id="filterStage" class="form-control">
+                                    <option value="all">هەموو قۆناغەکان</option>
+                                    <option value="1">قۆناغی 1</option>
+                                    <option value="2">قۆناغی 2</option>
+                                    <option value="3">قۆناغی 3</option>
+                                    <option value="4">قۆناغی 4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="filterDepartment">بەش:</label>
+                                <select id="filterDepartment" class="form-control">
+                                    <option value="all">هەموو بەشەکان</option>
+                                    <option value="ژمێریاری">ژمێریاری</option>
+                                    <option value="ئامار">ئامار</option>
+                                    <option value="ئابوری">ئابوری</option>
+                                    <option value="کارگێڕی کار">کارگێڕی کار</option>
+                                    <option value="دارای بانک">دارای بانک</option>
+                                    <option value="بازاڕگەری">بازاڕگەری</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="filterGroup">گروپ:</label>
+                                <select id="filterGroup" class="form-control">
+                                    <option value="all">هەموو گروپەکان</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="filterLesson">دەرس:</label>
+                                <select id="filterLesson" class="form-control">
+                                    <option value="all">هەموو دەرسەکان</option>
+                                    <!-- لیستی دەرسەکان لێرە دەخرێتەوە -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="loadAttendanceData()">نیشاندان</button>
+                    <button class="btn btn-danger" onclick="resetFilters()">پاککردنەوەی فیلتەر</button>
+                </div>
+                
+                <h3>لیستی غیاباتی قوتابیان</h3>
+                <div class="table-responsive">
+                    <table id="attendanceTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>ناوی قوتابی</th>
+                                <th>قۆناغ</th>
+                                <th>بەش</th>
+                                <th>گروپ</th>
+                                <th>دەرس</th>
+                                <th>ژمارەی غیاب</th>
+                                <th>کاتی نەهاتن</th>
+                                <th>کردارەکان</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- لیستی غیابەکان لێرە دەخرێتەوە -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3>ئامارەکانی غیاب</h3>
+                <div class="chart-container">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -279,6 +419,7 @@
         // گەرەکانی داتابەیس
         let db = null;
         let currentUser = null;
+        let attendanceChart = null;
         
         // داتاکانی تێستکردن
         const initData = {
@@ -304,12 +445,28 @@
                 }
                 
                 renderTeachersTable();
+                populateLessonFilter();
             } catch (error) {
                 console.error("هەڵە لە کارکردنی داتابەیس:", error);
                 Swal.fire({
                     icon: 'error',
                     title: 'هەڵە',
                     text: 'کێشەیەک هەیە لە کارکردنی داتابەیس!'
+                });
+            }
+        }
+
+        // پڕکردنەوەی فیلتەری دەرسەکان
+        function populateLessonFilter() {
+            const filterLesson = document.getElementById('filterLesson');
+            filterLesson.innerHTML = '<option value="all">هەموو دەرسەکان</option>';
+            
+            if (db.lessons && db.lessons.length > 0) {
+                db.lessons.forEach(lesson => {
+                    const option = document.createElement('option');
+                    option.value = lesson;
+                    option.textContent = lesson;
+                    filterLesson.appendChild(option);
                 });
             }
         }
@@ -327,9 +484,254 @@
             // چالاککردن/لەکارخستنی دوگمەکانی تاب
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
+                if (btn.onclick.toString().includes(tabId)) {
+                    btn.classList.add('active');
+                }
             });
             
-            event.target.classList.add('active');
+            // ئەگەر تابەکە تابەکی غیاب بوو، داتاکانی باربکە
+            if (tabId === 'attendanceTab') {
+                loadAttendanceData();
+            }
+        }
+
+        // بارکردنی داتاکانی غیاب
+        function loadAttendanceData() {
+            const stage = document.getElementById('filterStage').value;
+            const department = document.getElementById('filterDepartment').value;
+            const group = document.getElementById('filterGroup').value;
+            const lesson = document.getElementById('filterLesson').value;
+            
+            const attendanceTable = document.getElementById('attendanceTable').querySelector('tbody');
+            attendanceTable.innerHTML = '';
+            
+            // کۆکردنەوەی هەموو قوتابیان لە هەموو گروپەکان
+            let allStudents = [];
+            const stages = stage === 'all' ? ['1', '2', '3', '4'] : [stage];
+            const departments = department === 'all' ? ['ژمێریاری', 'ئامار', 'ئابوری', 'کارگێڕی کار', 'دارای بانک', 'بازاڕگەری'] : [department];
+            const groups = group === 'all' ? ['A', 'B', 'C', 'D'] : [group];
+            
+            stages.forEach(s => {
+                departments.forEach(d => {
+                    groups.forEach(g => {
+                        const key = `students_${s}_${d}_${g}`;
+                        const students = JSON.parse(localStorage.getItem(key)) || [];
+                        students.forEach(student => {
+                            // زیادکردنی قۆناغ و بەش و گروپ بۆ هەر قوتابیەک
+                            const studentWithInfo = {...student, stage: s, department: d, group: g};
+                            allStudents.push(studentWithInfo);
+                        });
+                    });
+                });
+            });
+            
+            if (allStudents.length === 0) {
+                attendanceTable.innerHTML = '<tr><td colspan="8" class="text-center">هیچ قوتابیەک تۆمارنەکراوە</td></tr>';
+                return;
+            }
+            
+            // پەرەپێدانی داتاکان بۆ نیشاندان
+            let chartData = {
+                labels: ['کەمتر لە ٢ غیاب', '٢-٣ غیاب', '٤-٥ غیاب', '٦ غیاب یان زیاتر'],
+                datasets: [{
+                    label: 'ژمارەی قوتابیان',
+                    data: [0, 0, 0, 0],
+                    backgroundColor: ['#4bc0c0', '#ffcd56', '#ff9f40', '#ff6384']
+                }]
+            };
+            
+            allStudents.forEach(student => {
+                if (student.lessons) {
+                    Object.entries(student.lessons).forEach(([lessonName, lessonData]) => {
+                        // فیلتەرکردنی دەرسەکان
+                        if (lesson !== 'all' && lessonName !== lesson) return;
+                        
+                        const absences = lessonData.absences || 0;
+                        const absenceDates = lessonData.absenceDates || [];
+                        
+                        // زیادکردن بۆ داتاکانی چارت
+                        if (absences < 2) chartData.datasets[0].data[0]++;
+                        else if (absences < 4) chartData.datasets[0].data[1]++;
+                        else if (absences < 6) chartData.datasets[0].data[2]++;
+                        else chartData.datasets[0].data[3]++;
+                        
+                        // دروستکردنی ڕیزبەندی نوێ
+                        const row = document.createElement('tr');
+                        
+                        // زیادکردنی بادجی ئاگاداری
+                        let warningBadge = '';
+                        if (absences >= 6) {
+                            warningBadge = '<span class="danger-badge">کۆتایی هاتووە!</span>';
+                        } else if (absences >= 4) {
+                            warningBadge = '<span class="warning-badge">ئاگاداری!</span>';
+                        }
+                        
+                        row.innerHTML = `
+                            <td>${student.name} ${warningBadge}</td>
+                            <td>${student.stage}</td>
+                            <td>${student.department}</td>
+                            <td>${student.group}</td>
+                            <td>${lessonName}</td>
+                            <td>${absences}</td>
+                            <td>${absenceDates.map(date => `<div class="absence-badge">${date}</div>`).join('') || 'هیچ'}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" onclick="editAbsence('${student.stage}', '${student.department}', '${student.group}', '${student.name}', '${lessonName}')">دەستکاری</button>
+                                <button class="btn btn-danger btn-sm" onclick="resetAbsence('${student.stage}', '${student.department}', '${student.group}', '${student.name}', '${lessonName}')">سفرکردنەوە</button>
+                            </td>
+                        `;
+                        attendanceTable.appendChild(row);
+                    });
+                }
+            });
+            
+            // دروستکردنی چارت
+            renderAttendanceChart(chartData);
+        }
+
+        // نیشاندانی چارتی غیاب
+        function renderAttendanceChart(chartData) {
+            const ctx = document.getElementById('attendanceChart').getContext('2d');
+            
+            // لەناوبردنی چارتی پێشوو ئەگەر هەبوو
+            if (attendanceChart) {
+                attendanceChart.destroy();
+            }
+            
+            attendanceChart = new Chart(ctx, {
+                type: 'pie',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: 'white'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'دابەشکاری غیابەکان',
+                            color: 'white'
+                        }
+                    }
+                }
+            });
+        }
+
+        // دەستکاری غیاب
+        function editAbsence(stage, department, group, studentName, lessonName) {
+            const key = `students_${stage}_${department}_${group}`;
+            const students = JSON.parse(localStorage.getItem(key)) || [];
+            const student = students.find(s => s.name === studentName);
+            
+            if (!student || !student.lessons || !student.lessons[lessonName]) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'هەڵە',
+                    text: 'زانیاری غیاب نەدۆزرایەوە!'
+                });
+                return;
+            }
+            
+            const absenceData = student.lessons[lessonName];
+            const currentAbsences = absenceData.absences || 0;
+            
+            Swal.fire({
+                title: 'دەستکاری غیاب',
+                html: `
+                    <p>قوتابی: <strong>${studentName}</strong></p>
+                    <p>دەرس: <strong>${lessonName}</strong></p>
+                    <p>ژمارەی ئێستای غیاب: <strong>${currentAbsences}</strong></p>
+                    <input type="number" id="editAbsenceCount" class="swal2-input" value="${currentAbsences}" min="0" max="20">
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'نوێکردنەوە',
+                cancelButtonText: 'پاشگەزبوونەوە',
+                preConfirm: () => {
+                    const newCount = parseInt(document.getElementById('editAbsenceCount').value);
+                    if (isNaN(newCount) || newCount < 0) {
+                        Swal.showValidationMessage('تکایە ژمارەیەکی دروست بنووسە');
+                    }
+                    return newCount;
+                }
+            }).then(result => {
+                if (result.isConfirmed) {
+                    const newCount = result.value;
+                    
+                    // نوێکردنەوەی ژمارەی غیابەکان
+                    absenceData.absences = newCount;
+                    
+                    // ڕێکخستنی لیستی کاتەکانی نەهاتن
+                    if (newCount === 0) {
+                        absenceData.absenceDates = [];
+                    } else if (newCount < absenceData.absenceDates.length) {
+                        // کورتکردنەوەی لیستەکە ئەگەر ژمارەی غیاب کەمتر بێت
+                        absenceData.absenceDates = absenceData.absenceDates.slice(0, newCount);
+                    } else if (newCount > absenceData.absenceDates.length) {
+                        // زیادکردنی کاتی نوێ بۆ لیستەکە ئەگەر ژمارەی غیاب زیاتر بێت
+                        const additionalAbsences = newCount - absenceData.absenceDates.length;
+                        for (let i = 0; i < additionalAbsences; i++) {
+                            absenceData.absenceDates.push(new Date().toLocaleString());
+                        }
+                    }
+                    
+                    // پاشەکەوتکردنی داتاکان
+                    localStorage.setItem(key, JSON.stringify(students));
+                    
+                    // نوێکردنەوەی پەڕەکە
+                    loadAttendanceData();
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'سەرکەوتوو',
+                        text: 'ژمارەی غیابەکان نوێکرایەوە'
+                    });
+                }
+            });
+        }
+
+        // سفرکردنەوەی غیاب
+        function resetAbsence(stage, department, group, studentName, lessonName) {
+            Swal.fire({
+                title: 'دڵنیایت؟',
+                text: `دڵنیایت دەتەوێت هەموو غیابەکانی ${studentName} بسڕیتەوە لە دەرسی ${lessonName}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'بەڵێ، بسڕەوە',
+                cancelButtonText: 'نەخێر'
+            }).then(result => {
+                if (result.isConfirmed) {
+                    const key = `students_${stage}_${department}_${group}`;
+                    const students = JSON.parse(localStorage.getItem(key)) || [];
+                    const student = students.find(s => s.name === studentName);
+                    
+                    if (student && student.lessons && student.lessons[lessonName]) {
+                        student.lessons[lessonName] = {
+                            absences: 0,
+                            absenceDates: []
+                        };
+                        
+                        localStorage.setItem(key, JSON.stringify(students));
+                        loadAttendanceData();
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'سەرکەوتوو',
+                            text: 'هەموو غیابەکان سفرکرانەوە'
+                        });
+                    }
+                }
+            });
+        }
+
+        // پاککردنەوەی فیلتەرەکان
+        function resetFilters() {
+            document.getElementById('filterStage').value = 'all';
+            document.getElementById('filterDepartment').value = 'all';
+            document.getElementById('filterGroup').value = 'all';
+            document.getElementById('filterLesson').value = 'all';
+            loadAttendanceData();
         }
 
         // نیشاندانی لیستی مامۆستایان
@@ -446,7 +848,7 @@
                         return;
                     }
                     
-                    // نوێکردنەوەی زانیاریەکانی مامۆستا
+                    // نوێکردنەوەی زانیارییەکان
                     db.teachers[index] = { name, username, password };
                     localStorage.setItem('attendance_database', JSON.stringify(db));
                     
@@ -455,7 +857,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'سەرکەوتوو',
-                        text: 'زانیاریەکانی مامۆستا نوێکرایەوە'
+                        text: 'زانیاری مامۆستا نوێکرایەوە'
                     });
                 }
             });
@@ -463,18 +865,9 @@
 
         // سڕینەوەی مامۆستا
         function deleteTeacher(index) {
-            if (db.teachers[index].username === 'admin') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'هەڵە',
-                    text: 'ناتوانیت مامۆستای سەرەکی بسڕیتەوە!'
-                });
-                return;
-            }
-            
             Swal.fire({
                 title: 'دڵنیایت؟',
-                text: `دڵنیایت دەتەوێت مامۆستای "${db.teachers[index].name}" بسڕیتەوە؟`,
+                text: 'دڵنیایت دەتەوێت ئەم مامۆستا بسڕیتەوە؟',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'بەڵێ، بسڕەوە',
@@ -483,12 +876,13 @@
                 if (result.isConfirmed) {
                     db.teachers.splice(index, 1);
                     localStorage.setItem('attendance_database', JSON.stringify(db));
+                    
                     renderTeachersTable();
                     
                     Swal.fire({
                         icon: 'success',
                         title: 'سەرکەوتوو',
-                        text: 'مامۆستا سڕایەوە'
+                        text: 'مامۆستا سڕدرایەوە'
                     });
                 }
             });
@@ -501,35 +895,35 @@
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
             
+            if (!username || !password) {
+                document.getElementById('loginMessage').textContent = 'تکایە هەموو خانەکان پڕبکەرەوە!';
+                return;
+            }
+            
+            // پشکنینی ناوی بەکارهێنەر و وشەی نهێنی
             const teacher = db.teachers.find(t => t.username === username && t.password === password);
             
             if (teacher) {
-                // چوونەژوورەوەی سەرکەوتوو
                 currentUser = teacher;
-                document.getElementById('loginMessage').textContent = 'چوونەژوورەوە سەرکەوتوو بوو!';
-                document.getElementById('loginMessage').style.color = 'lightgreen';
+                document.getElementById('loginMessage').textContent = '';
+                showTab('adminTab');
                 
-                // گواستنەوە بۆ پەڕەی سەرەکی
-                setTimeout(() => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'بەخێربێیت!',
-                        text: `بەخێربێیت ${teacher.name}! ئێستا دەچیتە ناو سیستەمی غیاباتی قوتابیان.`,
-                        confirmButtonText: 'باشە'
-                    }).then(() => {
-                        // لە ڕیالیەتدا، ئێرە پێویستە بچیتە سەر پەڕەی سەرەکی سیستەمەکە
-                        // بۆ نمونە: window.location.href = 'main.html';
-                        alert('لێرە دەچینە ناو سیستەمی سەرەکی');
-                    });
-                }, 1000);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'بەخێربێیت',
+                    text: `بەخێربێیت ${teacher.name}`,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
             } else {
                 document.getElementById('loginMessage').textContent = 'ناوی بەکارهێنەر یان وشەی نهێنی هەڵەیە!';
-                document.getElementById('loginMessage').style.color = 'var(--light-purple)';
             }
         });
 
-        // دەستپێکردنی داتابەیس کاتێک پەڕە بارکرا
-        document.addEventListener('DOMContentLoaded', initDatabase);
+        // دەستپێکردنی سیستەم کاتێک پەڕەکە بارکرا
+        document.addEventListener('DOMContentLoaded', function() {
+            initDatabase();
+        });
     </script>
 </body>
 </html>
