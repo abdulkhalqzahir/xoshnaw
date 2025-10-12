@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستەمی هاوکێشەی حسابداری - مۆدێرن</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff2e63;
+            --secondary: #08d9d6;
+            --accent: #ff9a00;
+            --dark: #0f0f0f;
+            --darker: #070707;
+            --light: #eaeaea;
+            --card-bg: #1a1a1a;
+            --success: #00ff88;
+            --warning: #ffcc00;
+            --danger: #ff2e63;
+            --shadow: 0 10px 30px rgba(255, 46, 99, 0.2);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1a1a1a 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 46, 99, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            animation: shimmer 3s infinite;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            text-shadow: 0 5px 20px rgba(255, 46, 99, 0.3);
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .description {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 1100px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            animation: slideUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 50px rgba(255, 46, 99, 0.3);
+        }
+        
+        .card h2 {
+            margin-bottom: 25px;
+            color: var(--light);
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 700;
+        }
+        
+        .card h2 i {
+            color: var(--secondary);
+            font-size: 1.8rem;
+        }
+        
+        .equation-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        .equation-part {
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin: 15px;
+            min-width: 300px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .equation-part::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+        }
+        
+        .equation-part.assets::before {
+            background: var(--success);
+        }
+        
+        .equation-part.liabilities::before {
+            background: var(--primary);
+        }
+        
+        .equation-part.equity::before {
+            background: var(--secondary);
+        }
+        
+        .equation-part:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 45px rgba(255, 46, 99, 0.25);
+        }
+        
+        .equation-part h3 {
+            margin-bottom: 20px;
+            color: var(--light);
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .amount {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 25px 0;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+        }
+        
+        .assets .amount {
+            color: var(--success);
+        }
+        
+        .liabilities .amount {
+            color: var(--primary);
+        }
+        
+        .equity .amount {
+            color: var(--secondary);
+        }
+        
+        .equation-symbol {
+            font-size: 4rem;
+            color: var(--light);
+            font-weight: 900;
+            margin: 0 25px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+            animation: pulse 3s infinite;
+        }
+        
+        .balance-message {
+            text-align: center;
+            margin: 40px 0;
+            padding: 25px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1.4rem;
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            animation: fadeIn 1s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .balanced {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+        
+        .unbalanced {
+            background: rgba(255, 46, 99, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(255, 46, 99, 0.2);
+            animation: shake 0.8s ease-in-out;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        @media (max-width: 900px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .control-group {
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+        
+        .control-group:hover {
+            transform: translateY(-8px);
+        }
+        
+        .control-group h3 {
+            margin-bottom: 25px;
+            color: var(--light);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 700;
+        }
+        
+        .control-group h3 i {
+            color: var(--accent);
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--light);
+            font-size: 1.1rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            background: rgba(10, 10, 10, 0.7);
+            color: var(--light);
+            transition: var(--transition);
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 4px rgba(8, 217, 214, 0.2);
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: var(--transition);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 8px 25px rgba(255, 46, 99, 0.3);
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+        }
+        
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 46, 99, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(2px);
+        }
+        
+        .transactions {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
+            animation: slideUp 0.8s ease-out 0.4s both;
+        }
+        
+        .transactions h2 {
+            margin-bottom: 30px;
+            color: var(--light);
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 700;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 20px 25px;
+            text-align: right;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        th {
+            background-color: rgba(10, 10, 10, 0.7);
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        
+        tr {
+            transition: var(--transition);
+        }
+        
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .positive {
+            color: var(--success);
+            font-weight: 700;
+        }
+        
+        .negative {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .account-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .account-card {
+            background: rgba(10, 10, 10, 0.7);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid var(--secondary);
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .account-card:hover {
+            transform: translateY(-8px);
+            background: rgba(15, 15, 15, 0.8);
+        }
+        
+        .account-card h4 {
+            margin-bottom: 15px;
+            color: var(--light);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .account-card .balance {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+        
+        .financial-reports {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 35px;
+        }
+        
+        @media (max-width: 768px) {
+            .financial-reports {
+                grid-template-columns: 1fr;
+            }
+            
+            .equation-container {
+                flex-direction: column;
+            }
+            
+            .equation-symbol {
+                margin: 15px 0;
+                transform: rotate(90deg);
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .report-card {
+            background: rgba(10, 10, 10, 0.7);
+            padding: 30px;
+            border-radius: 20px;
+            border-top: 5px solid var(--accent);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .report-card h3 {
+            margin-bottom: 20px;
+            color: var(--light);
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        
+        .report-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 1.1rem;
+        }
+        
+        .report-total {
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 3px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: 200px 0; }
+        }
+        
+        .transaction-animation {
+            animation: highlight 2s ease-out;
+        }
+        
+        @keyframes highlight {
+            0% { background-color: rgba(8, 217, 214, 0.3); }
+            100% { background-color: transparent; }
+        }
+        
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 46, 99, 0.05);
+            border-radius: 50%;
+            animation: float 25s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1200px) rotate(720deg); }
+        }
+        
+        .glow {
+            text-shadow: 0 0 10px currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements" id="floating-container">
+        <!-- Floating elements will be generated by JavaScript -->
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>  عبدالخالق خۆشناو </h1>
+            <p class="subtitle">--------------------------------------------------------------------------</p>
+            <p class="description">ئەم سیستەمە ڕێگەت پێدەدا خۆت سەرمایە و قەرز دیاری بکەیت و هاوکێشەکە بە شێوازێکی ئۆتۆماتیکی وابەستە بھێڵیتەوە</p>
+        </header>
+        
+        <div class="dashboard">
+            <div class="card">
+                <h2><i class="fas fa-chart-pie"></i> ڕاپۆرتی دارایی</h2>
+                <div class="financial-reports">
+                    <div class="report-card">
+                        <h3>ڕاپۆرتی دارایی</h3>
+                        <div class="report-item">
+                            <span>دارایییە گشتییەکان:</span>
+                            <span id="total-assets-report">0 دینار</span>
+                        </div>
+                        <div class="report-item">
+                            <span>قەرزی گشتی:</span>
+                            <span id="total-liabilities-report">0 دینار</span>
+                        </div>
+                        <div class="report-item report-total">
+                            <span>سەرمایەی خاوەنکار:</span>
+                            <span id="total-equity-report">0 دینار</span>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <h3>شیکارییەکی خێرا</h3>
+                        <div class="report-item">
+                            <span>ڕێژەی قەرز بۆ دارایی:</span>
+                            <span id="debt-ratio">0%</span>
+                        </div>
+                        <div class="report-item">
+                            <span>ڕێژەی سەرمایە بۆ دارایی:</span>
+                            <span id="equity-ratio">0%</span>
+                        </div>
+                        <div class="report-item">
+                            <span>دۆخی دارایی:</span>
+                            <span id="financial-health">ناڕوون</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-wallet"></i> هەژمارەکان</h2>
+                <div class="account-cards">
+                    <div class="account-card">
+                        <h4>پارەیەکی ئامادە</h4>
+                        <div class="balance" id="cash-account">0 دینار</div>
+                    </div>
+                    <div class="account-card">
+                        <h4>قەرزی بانک</h4>
+                        <div class="balance" id="bank-loan-account">0 دینار</div>
+                    </div>
+                    <div class="account-card">
+                        <h4>کەرزی فرۆشەر</h4>
+                        <div class="balance" id="accounts-payable">0 دینار</div>
+                    </div>
+                    <div class="account-card">
+                        <h4>سەرمایەی خاوەنکار</h4>
+                        <div class="balance" id="owner-equity-account">0 دینار</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="equation-container">
+            <div class="equation-part assets">
+                <h3>دارایی</h3>
+                <div class="amount" id="assets-amount">0 دینار</div>
+                <p>سەرمایە و سامانەکان</p>
+            </div>
+            
+            <div class="equation-symbol">=</div>
+            
+            <div class="equation-part liabilities">
+                <h3>قەرز</h3>
+                <div class="amount" id="liabilities-amount">0 دینار</div>
+                <p>کەرزی و بەرپرسیارییەکان</p>
+            </div>
+            
+            <div class="equation-symbol">+</div>
+            
+            <div class="equation-part equity">
+                <h3>سەرمایە</h3>
+                <div class="amount" id="equity-amount">0 دینار</div>
+                <p>سەرمایەی خاوەنکار</p>
+            </div>
+        </div>
+        
+        <div class="balance-message balanced" id="balance-message">
+            <i class="fas fa-check-circle glow"></i> هاوکێشەکە وابەستە! دارایی = قەرز + سەرمایە
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <h3><i class="fas fa-cogs"></i> ڕێکخستنی سەرەتا</h3>
+                <div class="input-group">
+                    <label for="initial-cash">پارەی ئامادە (دینار):</label>
+                    <input type="number" id="initial-cash" min="0" value="5000">
+                </div>
+                <div class="input-group">
+                    <label for="initial-equipment">سامان و ئامێر (دینار):</label>
+                    <input type="number" id="initial-equipment" min="0" value="5000">
+                </div>
+                <div class="input-group">
+                    <label for="initial-bank-loan">قەرزی بانک (دینار):</label>
+                    <input type="number" id="initial-bank-loan" min="0" value="4000">
+                </div>
+                <div class="input-group">
+                    <label for="initial-accounts-payable">کەرزی فرۆشەر (دینار):</label>
+                    <input type="number" id="initial-accounts-payable" min="0" value="2000">
+                </div>
+                <div class="input-group">
+                    <label for="initial-owner-equity">سەرمایەی خاوەنکار (دینار):</label>
+                    <input type="number" id="initial-owner-equity" min="0" value="4000">
+                </div>
+                <button id="setup-accounts">
+                    <i class="fas fa-play-circle"></i> دەستپێکردنی سیستەم
+                </button>
+            </div>
+            
+            <div class="control-group">
+                <h3><i class="fas fa-exchange-alt"></i> زیادکردنی تراکنش</h3>
+                <div class="input-group">
+                    <label for="transaction-type">جۆری تراکنش:</label>
+                    <select id="transaction-type">
+                        <option value="asset-increase">زیادبوونی دارایی</option>
+                        <option value="asset-decrease">کەمبوونی دارایی</option>
+                        <option value="liability-increase">زیادبوونی قەرز</option>
+                        <option value="liability-decrease">کەمبوونی قەرز</option>
+                        <option value="equity-increase">زیادبوونی سەرمایە</option>
+                        <option value="equity-decrease">کەمبوونی سەرمایە</option>
+                        <option value="custom-transaction">تراکنشی تایبەت</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="transaction-amount">بڕی تراکنش (دینار):</label>
+                    <input type="number" id="transaction-amount" min="0" value="1000">
+                </div>
+                <div class="input-group">
+                    <label for="transaction-description">پێناسەی تراکنش:</label>
+                    <input type="text" id="transaction-description" placeholder="وەک: کڕینی ئامێر">
+                </div>
+                <div class="input-group" id="custom-accounts-group" style="display: none;">
+                    <label for="affected-accounts">هەژمارە کاریگەرەکان:</label>
+                    <select id="affected-accounts" multiple>
+                        <option value="cash">پارەی ئامادە</option>
+                        <option value="equipment">سامان و ئامێر</option>
+                        <option value="bank-loan">قەرزی بانک</option>
+                        <option value="accounts-payable">کەرزی فرۆشەر</option>
+                        <option value="owner-equity">سەرمایەی خاوەنکار</option>
+                    </select>
+                </div>
+                <button id="add-transaction">
+                    <i class="fas fa-plus-circle"></i> زیادکردنی تراکنش
+                </button>
+            </div>
+        </div>
+        
+        <div class="transactions">
+            <h2><i class="fas fa-history"></i> مێژووی تراکنشەکان</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ڕێکەوت</th>
+                        <th>پێناسە</th>
+                        <th>جۆر</th>
+                        <th>بڕ (دینار)</th>
+                        <th>کاریگەری</th>
+                    </tr>
+                </thead>
+                <tbody id="transactions-body">
+                    <!-- تراکنشەکان لێرە زیاد دەکرێن -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // داتاکان
+        let accountingData = {
+            assets: 0,
+            liabilities: 0,
+            equity: 0,
+            transactions: [],
+            accounts: {
+                cash: 0,
+                equipment: 0,
+                bankLoan: 0,
+                accountsPayable: 0,
+                ownerEquity: 0
+            }
+        };
+
+        // ئەلیمانتەکان
+        const assetsAmountEl = document.getElementById('assets-amount');
+        const liabilitiesAmountEl = document.getElementById('liabilities-amount');
+        const equityAmountEl = document.getElementById('equity-amount');
+        const balanceMessageEl = document.getElementById('balance-message');
+        const transactionsBodyEl = document.getElementById('transactions-body');
+        
+        // کنترۆڵەکان
+        const transactionTypeEl = document.getElementById('transaction-type');
+        const transactionAmountEl = document.getElementById('transaction-amount');
+        const transactionDescriptionEl = document.getElementById('transaction-description');
+        const customAccountsGroup = document.getElementById('custom-accounts-group');
+        const affectedAccountsEl = document.getElementById('affected-accounts');
+        const addTransactionBtn = document.getElementById('add-transaction');
+        
+        // ڕێکخستنی سەرەتا
+        const initialCashEl = document.getElementById('initial-cash');
+        const initialEquipmentEl = document.getElementById('initial-equipment');
+        const initialBankLoanEl = document.getElementById('initial-bank-loan');
+        const initialAccountsPayableEl = document.getElementById('initial-accounts-payable');
+        const initialOwnerEquityEl = document.getElementById('initial-owner-equity');
+        const setupAccountsBtn = document.getElementById('setup-accounts');
+        
+        // هەژمارەکان
+        const cashAccountEl = document.getElementById('cash-account');
+        const bankLoanAccountEl = document.getElementById('bank-loan-account');
+        const accountsPayableEl = document.getElementById('accounts-payable');
+        const ownerEquityAccountEl = document.getElementById('owner-equity-account');
+        
+        // ڕاپۆرتەکان
+        const totalAssetsReportEl = document.getElementById('total-assets-report');
+        const totalLiabilitiesReportEl = document.getElementById('total-liabilities-report');
+        const totalEquityReportEl = document.getElementById('total-equity-report');
+        const debtRatioEl = document.getElementById('debt-ratio');
+        const equityRatioEl = document.getElementById('equity-ratio');
+        const financialHealthEl = document.getElementById('financial-health');
+
+        // فەنکشنی سەرەتا
+        function init() {
+            createFloatingElements();
+        }
+
+        // ڕێکخستنی سەرەتا
+        function setupAccounts() {
+            // وەرگرتنی نرخەکان
+            accountingData.accounts.cash = parseInt(initialCashEl.value) || 0;
+            accountingData.accounts.equipment = parseInt(initialEquipmentEl.value) || 0;
+            accountingData.accounts.bankLoan = parseInt(initialBankLoanEl.value) || 0;
+            accountingData.accounts.accountsPayable = parseInt(initialAccountsPayableEl.value) || 0;
+            accountingData.accounts.ownerEquity = parseInt(initialOwnerEquityEl.value) || 0;
+            
+            // کۆکردنەوەی گشتییەکان
+            accountingData.assets = accountingData.accounts.cash + accountingData.accounts.equipment;
+            accountingData.liabilities = accountingData.accounts.bankLoan + accountingData.accounts.accountsPayable;
+            accountingData.equity = accountingData.accounts.ownerEquity;
+            
+            accountingData.transactions = [];
+            
+            updateDisplay();
+            checkBalance();
+            updateReports();
+            
+            // زیادکردنی تراکنشی سەرەتا
+            const transaction = {
+                date: new Date().toLocaleDateString('ku'),
+                description: 'دەستپێکردنی سیستەم',
+                type: 'دانەی سەرەتا',
+                amount: 0,
+                effect: 'دامەزراندنی هەموو هەژمارەکان'
+            };
+            
+            accountingData.transactions.unshift(transaction);
+            renderTransactions();
+            
+            // پەیامی سەرکەوتن
+            showNotification('سیستەم بە سەرکەوتویی ڕێکخرا!', 'success');
+        }
+
+        // نوێکردنەوەی نیشاندان
+        function updateDisplay() {
+            assetsAmountEl.textContent = formatCurrency(accountingData.assets);
+            liabilitiesAmountEl.textContent = formatCurrency(accountingData.liabilities);
+            equityAmountEl.textContent = formatCurrency(accountingData.equity);
+            
+            // نوێکردنەوەی هەژمارەکان
+            cashAccountEl.textContent = formatCurrency(accountingData.accounts.cash);
+            bankLoanAccountEl.textContent = formatCurrency(accountingData.accounts.bankLoan);
+            accountsPayableEl.textContent = formatCurrency(accountingData.accounts.accountsPayable);
+            ownerEquityAccountEl.textContent = formatCurrency(accountingData.accounts.ownerEquity);
+            
+            renderTransactions();
+            updateReports();
+        }
+
+        // پێوانی دراو
+        function formatCurrency(amount) {
+            return amount.toLocaleString('ku') + ' دینار';
+        }
+
+        // پشکنینی وابەستەیی هاوکێشەکە
+        function checkBalance() {
+            const totalAssets = accountingData.assets;
+            const totalLiabilitiesEquity = accountingData.liabilities + accountingData.equity;
+            const isBalanced = totalAssets === totalLiabilitiesEquity;
+            
+            if (isBalanced) {
+                balanceMessageEl.innerHTML = '<i class="fas fa-check-circle glow"></i> هاوکێشەکە وابەستە! دارایی = قەرز + سەرمایە';
+                balanceMessageEl.className = 'balance-message balanced';
+            } else {
+                const difference = Math.abs(totalAssets - totalLiabilitiesEquity);
+                balanceMessageEl.innerHTML = `<i class="fas fa-exclamation-triangle"></i> هاوکێشەکە وابەستە نییە! جیاوازی: ${formatCurrency(difference)}`;
+                balanceMessageEl.className = 'balance-message unbalanced';
+            }
+            
+            return isBalanced;
+        }
+
+        // نوێکردنەوەی ڕاپۆرتەکان
+        function updateReports() {
+            // ڕاپۆرتی دارایی
+            totalAssetsReportEl.textContent = formatCurrency(accountingData.assets);
+            totalLiabilitiesReportEl.textContent = formatCurrency(accountingData.liabilities);
+            totalEquityReportEl.textContent = formatCurrency(accountingData.equity);
+            
+            // شیکارییەکان
+            const debtRatio = accountingData.assets > 0 ? (accountingData.liabilities / accountingData.assets) * 100 : 0;
+            const equityRatio = accountingData.assets > 0 ? (accountingData.equity / accountingData.assets) * 100 : 0;
+            
+            debtRatioEl.textContent = debtRatio.toFixed(1) + '%';
+            equityRatioEl.textContent = equityRatio.toFixed(1) + '%';
+            
+            // دۆخی دارایی
+            if (debtRatio < 30) {
+                financialHealthEl.textContent = 'زۆر باش';
+                financialHealthEl.style.color = 'var(--success)';
+            } else if (debtRatio < 60) {
+                financialHealthEl.textContent = 'مامناوەند';
+                financialHealthEl.style.color = 'var(--warning)';
+            } else {
+                financialHealthEl.textContent = 'مەترسیدار';
+                financialHealthEl.style.color = 'var(--danger)';
+            }
+        }
+
+        // زیادکردنی تراکنش
+        function addTransaction() {
+            const type = transactionTypeEl.value;
+            const amount = parseInt(transactionAmountEl.value) || 0;
+            const description = transactionDescriptionEl.value || 'بێ ناو';
+            
+            if (amount <= 0) {
+                showNotification('تکایە بڕێکی دروست بنووسە', 'error');
+                return;
+            }
+            
+            let transactionTypeText = '';
+            let effectDescription = '';
+            
+            // جێبەجێکردنی گۆڕانکارییەکان بەپێی جۆری تراکنش
+            switch(type) {
+                case 'asset-increase':
+                    accountingData.assets += amount;
+                    accountingData.accounts.cash += amount;
+                    transactionTypeText = 'زیادبوونی دارایی';
+                    effectDescription = 'دارایی +, پارەی ئامادە +';
+                    break;
+                case 'asset-decrease':
+                    if (accountingData.accounts.cash >= amount) {
+                        accountingData.assets -= amount;
+                        accountingData.accounts.cash -= amount;
+                        transactionTypeText = 'کەمبوونی دارایی';
+                        effectDescription = 'دارایی -, پارەی ئامادە -';
+                    } else {
+                        showNotification('پارەی ئامادە پێویست نییە!', 'error');
+                        return;
+                    }
+                    break;
+                case 'liability-increase':
+                    accountingData.liabilities += amount;
+                    accountingData.accounts.bankLoan += amount;
+                    transactionTypeText = 'زیادبوونی قەرز';
+                    effectDescription = 'قەرز +, قەرزی بانک +';
+                    break;
+                case 'liability-decrease':
+                    if (accountingData.accounts.bankLoan >= amount) {
+                        accountingData.liabilities -= amount;
+                        accountingData.accounts.bankLoan -= amount;
+                        transactionTypeText = 'کەمبوونی قەرز';
+                        effectDescription = 'قەرز -, قەرزی بانک -';
+                    } else {
+                        showNotification('قەرزی بانک پێویست نییە!', 'error');
+                        return;
+                    }
+                    break;
+                case 'equity-increase':
+                    accountingData.equity += amount;
+                    accountingData.accounts.ownerEquity += amount;
+                    transactionTypeText = 'زیادبوونی سەرمایە';
+                    effectDescription = 'سەرمایە +, سەرمایەی خاوەنکار +';
+                    break;
+                case 'equity-decrease':
+                    if (accountingData.accounts.ownerEquity >= amount) {
+                        accountingData.equity -= amount;
+                        accountingData.accounts.ownerEquity -= amount;
+                        transactionTypeText = 'کەمبوونی سەرمایە';
+                        effectDescription = 'سەرمایە -, سەرمایەی خاوەنکار -';
+                    } else {
+                        showNotification('سەرمایەی خاوەنکار پێویست نییە!', 'error');
+                        return;
+                    }
+                    break;
+                case 'custom-transaction':
+                    // لەم شوێنەدا دەتوانیت تراکنشی تایبەت زیاد بکەیت
+                    transactionTypeText = 'تراکنشی تایبەت';
+                    effectDescription = 'چەند هەژمارێکی کاریگەر';
+                    break;
+            }
+            
+            // زیادکردنی تراکنش بۆ لیستەکە
+            const transaction = {
+                date: new Date().toLocaleDateString('ku'),
+                description: description,
+                type: transactionTypeText,
+                amount: amount,
+                effect: effectDescription
+            };
+            
+            accountingData.transactions.unshift(transaction);
+            
+            // نوێکردنەوەی نیشاندان و پشکنینی وابەستەیی
+            updateDisplay();
+            const isBalanced = checkBalance();
+            
+            // پاککردنەوەی خانەکانی تێکردن
+            transactionAmountEl.value = '';
+            transactionDescriptionEl.value = '';
+            
+            // ئەنیمەیشنی تراکنش
+            animateTransaction();
+            
+            // پەیامی سەرکەوتن
+            if (isBalanced) {
+                showNotification('تراکنش بە سەرکەوتویی زیادکرا!', 'success');
+            } else {
+                showNotification('تراکنش زیادکرا، بەڵام هاوکێشەکە وابەستە نییە!', 'warning');
+            }
+        }
+
+        // نیشاندانی تراکنشەکان
+        function renderTransactions() {
+            transactionsBodyEl.innerHTML = '';
+            
+            if (accountingData.transactions.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5" style="text-align: center;">هیچ تراکنشێک نییە</td>`;
+                transactionsBodyEl.appendChild(row);
+                return;
+            }
+            
+            accountingData.transactions.forEach((transaction, index) => {
+                const row = document.createElement('tr');
+                if (index === 0) row.classList.add('transaction-animation');
+                
+                const amountClass = transaction.type.includes('کەمبوونی') ? 'negative' : 'positive';
+                
+                row.innerHTML = `
+                    <td>${transaction.date}</td>
+                    <td>${transaction.description}</td>
+                    <td>${transaction.type}</td>
+                    <td class="${amountClass}">${formatCurrency(transaction.amount)}</td>
+                    <td>${transaction.effect}</td>
+                `;
+                
+                transactionsBodyEl.appendChild(row);
+            });
+        }
+
+        // ئەنیمەیشنی تراکنش
+        function animateTransaction() {
+            const equationParts = document.querySelectorAll('.equation-part');
+            equationParts.forEach(part => {
+                part.style.transform = 'translateY(-15px) scale(1.05)';
+                setTimeout(() => {
+                    part.style.transform = 'translateY(0) scale(1)';
+                }, 400);
+            });
+        }
+
+        // دروستکردنی توخمە سەرەکییەکان
+        function createFloatingElements() {
+            const container = document.getElementById('floating-container');
+            for (let i = 0; i < 20; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                const size = Math.random() * 120 + 30;
+                const colors = ['rgba(255, 46, 99, 0.05)', 'rgba(8, 217, 214, 0.05)', 'rgba(255, 154, 0, 0.05)'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.animationDuration = `${Math.random() * 30 + 20}s`;
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                element.style.background = color;
+                
+                container.appendChild(element);
+            }
+        }
+
+        // نیشاندانی پەیام
+        function showNotification(message, type) {
+            // دروستکردنی پەیام
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.padding = '15px 25px';
+            notification.style.borderRadius = '10px';
+            notification.style.fontWeight = '600';
+            notification.style.zIndex = '1000';
+            notification.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+            notification.style.transition = 'all 0.4s ease';
+            
+            if (type === 'success') {
+                notification.style.background = 'var(--success)';
+                notification.style.color = 'var(--dark)';
+            } else if (type === 'error') {
+                notification.style.background = 'var(--primary)';
+                notification.style.color = 'white';
+            } else if (type === 'warning') {
+                notification.style.background = 'var(--accent)';
+                notification.style.color = 'var(--dark)';
+            }
+            
+            document.body.appendChild(notification);
+            
+            // لابردنی پەیام دوای 4 چرکە
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 400);
+            }, 4000);
+        }
+
+        // بەستنی فەنکشنەکان بە کردارەکان
+        addTransactionBtn.addEventListener('click', addTransaction);
+        setupAccountsBtn.addEventListener('click', setupAccounts);
+
+        // کۆنتڕۆڵی تراکنشی تایبەت
+        transactionTypeEl.addEventListener('change', function() {
+            if (this.value === 'custom-transaction') {
+                customAccountsGroup.style.display = 'block';
+            } else {
+                customAccountsGroup.style.display = 'none';
+            }
+        });
+
+        // دەستپێکردنی سیستەمەکە
+        init();
+    </script>
+</body>
+</html>
