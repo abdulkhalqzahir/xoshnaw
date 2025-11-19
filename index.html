@@ -1,400 +1,339 @@
 <!DOCTYPE html>
-<html lang="ku" dir="rtl">
+<html lang="ku">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فۆڕمی لۆگین</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-           font-family: Arial, Helvetica, sans-serif;
-            text-align: right;
-            color: thistle;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d0b2d 50%, #1a1a1a 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            overflow: hidden;
-        }
-        
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        .particle {
-            position: absolute;
-            background: linear-gradient(45deg, #ff0055, #9900ff);
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: float 15s infinite linear;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-1000px) translateX(500px) rotate(720deg);
-            }
-        }
-        
-        .login-container {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(255, 0, 85, 0.5);
-            width: 100%;
-            max-width: 450px;
-            padding: 40px;
-            text-align: center;
-            border: 1px solid #ff0055;
-            position: relative;
-            overflow: hidden;
-            animation: glow 3s infinite alternate;
-        }
-        
-        @keyframes glow {
-            0% {
-                box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
-            }
-            100% {
-                box-shadow: 0 0 40px rgba(153, 0, 255, 0.7);
-            }
-        }
-        
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, #ff0055, #9900ff, #ff0055);
-            z-index: -1;
-            border-radius: 20px;
-            animation: rotate 10s linear infinite;
-        }
-        
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        
-        .logo {
-            margin-bottom: 30px;
-            position: relative;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-        
-        .logo h1 {
-            color: #f5f1f2;
-            font-size: 36px;
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(255, 0, 85, 0.7);
-            margin-bottom: 10px;
-        }
-        
-        .logo p {
-            color: #ffffff;
-            margin-top: 5px;
-            font-size: 16px;
-            text-shadow: 0 0 5px rgba(153, 0, 255, 0.5);
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-            text-align: right;
-            position: relative;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: #fffdfe;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 15px 45px 15px 15px;
-            background: rgba(40, 40, 40, 0.8);
-            border: 2px solid #9900ff;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-            direction: ltr;
-            color: white;
-        }
-        
-        .form-group input:focus {
-            border-color: #fdfcfc;
-            outline: none;
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
-            background: rgba(50, 50, 50, 0.9);
-        }
-        
-        .form-group i {
-            position: absolute;
-            left: 15px;
-            top: 45px;
-            color: #9900ff;
-            font-size: 18px;
-        }
-        
-        .btn-login {
-            background: linear-gradient(45deg, #ff0055, #9900ff);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 15px 20px;
-            width: 100%;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 1px;
-        }
-        
-        .btn-login:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 0, 85, 0.4);
-        }
-        
-        .btn-login:active {
-            transform: translateY(-1px);
-        }
-        
-        .btn-login::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .btn-login:hover::after {
-            left: 100%;
-        }
-        
-        .form-footer {
-            margin-top: 25px;
-            font-size: 14px;
-            color: #aaa;
-        }
-        
-        .form-footer a {
-            color: #ff0055;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        
-        .form-footer a:hover {
-            color: #9900ff;
-            text-shadow: 0 0 5px rgba(153, 0, 255, 0.5);
-        }
-        
-        .error-message {
-            color: #ff0055;
-            margin-top: 15px;
-            font-size: 14px;
-            display: none;
-            background: rgba(40, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 3px solid #ff0055;
-            animation: shake 0.5s;
-        }
-        
-        .success-message {
-            color: #00ffaa;
-            margin-top: 15px;
-            font-size: 14px;
-            display: none;
-            background: rgba(0, 40, 0, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 3px solid #00ffaa;
-        }
-        
-        @keyframes shake {
-            0%, 100% {transform: translateX(0);}
-            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
-            20%, 40%, 60%, 80% {transform: translateX(5px);}
-        }
-        
-        .social-login {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(40, 40, 40, 0.8);
-            color: white;
-            font-size: 18px;
-            transition: all 0.3s;
-            border: 1px solid #9900ff;
-        }
-        
-        .social-btn:hover {
-            background: #ff0055;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.4);
-        }
-        
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px 20px;
-            }
-            
-            .logo h1 {
-                font-size: 28px;
-            }
-        }
-    </style>
+    <title>سیستەمی غیاباتی قوتابیان - کۆلێژی کارگێری و ئابووری</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    
-    <div class="login-container">
-        <div class="logo">
-            <h1>بەخێربێیت</h1>
-            <p>تکایە چوونەژوورەوە بکە بۆ هەژمارەکەت</p>
-        </div>
-        
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">ناوی بەکارهێنەر</label>
-                <i class="fas fa-user"></i>
-                <input type="text" id="username" name="username" placeholder="ناوی بەکارهێنەر بنووسە" required>
+
+    <div class="container">
+        <!-- فۆرمی چوونەژوورەوە -->
+        <div id="loginForm" class="card">
+            <div class="card-header text-center">
+                <h4><i class="fas fa-lock"></i> چوونەژوورەوە بۆ سیستەمی غیاباتی قوتابیان</h4>
             </div>
-            
-            <div class="form-group">
-                <label for="password">تێپەڕەوشە</label>
-                <i class="fas fa-lock"></i>
-                <input type="password" id="password" name="password" placeholder="تێپەڕەوشە بنووسە" required>
-            </div>
-            
-            <button type="submit" class="btn-login">چوونەژوورەوە</button>
-            
-            <div class="error-message" id="errorMessage">
-                <i class="fas fa-exclamation-circle"></i> ناوی بەکارهێنەر یان تێپەڕەوشە هەڵەیە. تکایە دووبارە هەوڵبدەوە.
-            </div>
-            
-            <div class="success-message" id="successMessage">
-                <i class="fas fa-check-circle"></i> سەرکەوتووبووت! گوازرەوتەوە بۆ پەڕەی سەرەکی...
-            </div>
-        </form>
-        
-        <div class="social-login">
-            <div class="social-btn">
-                <i class="fab fa-google"></i>
-            </div>
-            <div class="social-btn">
-                <i class="fab fa-facebook-f"></i>
-            </div>
-            <div class="social-btn">
-                <i class="fab fa-twitter"></i>
+            <div class="card-body">
+                <div class="logo-container">
+                    <i class="fas fa-graduation-cap" style="font-size: 90px; color: var(--light-purple);"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> ناوی بەکارهێنەر:</label>
+                    <input type="text" id="username" class="form-control" placeholder="ناوی بەکارهێنەر">
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-key"></i> وشەی نهێنی:</label>
+                    <input type="password" id="password" class="form-control" placeholder="وشەی نهێنی">
+                </div>
+                <button id="loginButton" class="btn-grad btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> چوونەژوورەوە
+                </button>
+                <div id="loginError" class="alert alert-danger mt-3" style="display: none;"></div>
             </div>
         </div>
-        
-      
+
+        <!-- ناوەڕۆکی سەرەکی (لە سەرەتادا شاردراوەتەوە) -->
+        <div id="mainContent" style="display: none;">
+            <div class="welcome-header">
+                <div class="logo-container">
+                    <div style="width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; color: var(--light-purple); font-size: 14px; text-align: center;">
+                        <i class="fas fa-graduation-cap" style="font-size: 90px;"></i>
+                    </div>
+                </div>
+                <h1>سیستەمی غیاباتی قوتابیان</h1>
+                <div class="welcome-message">
+                    <p>بەخێربێیت <span class="teacher-name" id="teacherNameDisplay">مامۆستای بەڕێز</span></p>
+                    <p>تکایە بە وردی کار لەسەر غیابی قوتابیان بکە</p>
+                </div>
+                <p>زانکۆی سەلاحەدین - هەولێر</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-user-plus"></i> فۆرمی زیادکردنی قوتابی
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="collegeSelect"><i class="fas fa-building"></i> هەڵبژاردنی کۆلێژ:</label>
+                                        <select id="collegeSelect" class="form-control">
+                                            <option value="کارگێری و ئابووری">کۆلێژی کارگێری و ئابووری</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="stageSelect"><i class="fas fa-graduation-cap"></i> هەڵبژاردنی قۆناغ:</label>
+                                        <select id="stageSelect" class="form-control">
+                                            <option value="1">قۆناغی 1</option>
+                                            <option value="2">قۆناغی 2</option>
+                                            <option value="3">قۆناغی 3</option>
+                                            <option value="4">قۆناغی 4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="departmentSelect"><i class="fas fa-book"></i> هەڵبژاردنی بەش:</label>
+                                        <select id="departmentSelect" class="form-control">
+                                            <!-- بەشەکان بەپێی کۆلێژ دەگۆڕدرێن -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="groupSelect"><i class="fas fa-users"></i> هەڵبژاردنی گروپ:</label>
+                                        <select id="groupSelect" class="form-control">
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="studentName"><i class="fas fa-user"></i> ناوی قوتابی:</label>
+                                        <input type="text" id="studentName" class="form-control" placeholder="ناوی قوتابی بنووسە">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-wrap justify-content-center mt-4">
+                                <button id="saveButton" class="btn-grad btn-success mb-3 flex-grow-1 mx-2"><i class="fas fa-save"></i> تۆمارکردن</button>
+                                <button onclick="clearAllData()" class="btn-grad btn-danger mb-3 flex-grow-1 mx-2"><i class="fas fa-trash-alt"></i> سڕینەوەی هەموو داتاکان</button>
+                                <button onclick="logout()" class="btn-grad btn-warning mb-3 flex-grow-1 mx-2"><i class="fas fa-sign-out-alt"></i> چوونەدەرەوە</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ناوەڕۆکی نوێ: هەڵگرتنی فایل -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-file-import"></i> هەڵگرتنی قوتابیان لە فایلی Excel
+                        </div>
+                        <div class="card-body">
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <div class="file-upload-icon">
+                                    <i class="fas fa-file-excel"></i>
+                                </div>
+                                <h4>فایلی Excel هەڵبگرە ئەنجامی بینە</h4>
+                                <p>فایلەکە پێویستە ستوونی ناوی تێدابێت</p>
+                                <input type="file" id="fileInput" accept=".xlsx, .xls" style="display: none;">
+                                <button class="btn-grad btn-primary" onclick="document.getElementById('fileInput').click()">
+                                    <i class="fas fa-upload"></i> هەڵگرتنی فایل
+                                </button>
+                            </div>
+                            
+                            <div id="importSummary" class="import-summary" style="display: none;">
+                                <h5>کۆی گشتی:</h5>
+                                <p class="import-success" id="importSuccess">٠ قوتابی بە سەرکەوتوویی تۆمارکران</p>
+                                <p class="import-error" id="importError">٠ هەڵە ڕوویدا</p>
+                            </div>
+                            
+                            <div class="text-center mt-4">
+                                <button onclick="exportTemplate()" class="btn-grad btn-warning mb-3">
+                                    <i class="fas fa-download"></i> هەڵگرتنی فەرمیتی Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بەشی نوێ: ئاماری غیابەکان -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar"></i> ئاماری غیابەکانی قوتابیان
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <div class="stats-box">
+                                        <div class="stats-number" id="totalStudents">0</div>
+                                        <div>کۆی قوتابیان</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stats-box">
+                                        <div class="stats-number" id="totalAbsences">0</div>
+                                        <div>کۆی غیابەکان</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stats-box">
+                                        <div class="stats-number" id="avgAbsences">0.0</div>
+                                        <div>تێکڕای غیاب</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stats-box">
+                                        <div class="stats-number" id="maxAbsences">0</div>
+                                        <div>زۆرترین غیاب</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- فیلتەرەکان -->
+                            <div class="row mt-4">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="statsLessonSelect"><i class="fas fa-book"></i> هەڵبژاردنی دەرس:</label>
+                                        <select id="statsLessonSelect" class="form-control">
+                                            <option value="all">هەموو دەرسەکان</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="statsDepartmentSelect"><i class="fas fa-building"></i> هەڵبژاردنی بەش:</label>
+                                        <select id="statsDepartmentSelect" class="form-control">
+                                            <option value="all">هەموو بەشەکان</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="statsGroupSelect"><i class="fas fa-users"></i> هەڵبژاردنی گروپ:</label>
+                                        <select id="statsGroupSelect" class="form-control">
+                                            <option value="all">هەموو گروپەکان</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- خشتەی ئامار -->
+                            <div class="table-responsive mt-4">
+                                <table id="statsTable" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>پلە</th>
+                                            <th>ناوی قوتابی</th>
+                                            <th>بەش</th>
+                                            <th>گروپ</th>
+                                            <th>کۆی غیابەکان</th>
+                                            <th>وردەکاری غیاب</th>
+                                            <th>پێگە</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- داتاکان لێرە دەخرێنەوە -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- دوگمەکانی هەڵگرتن -->
+                            <div class="text-center mt-4">
+                                <button onclick="exportStatsToExcel()" class="btn-grad btn-success mb-3">
+                                    <i class="fas fa-file-excel"></i> هەڵگرتنی ئامار بە Excel
+                                </button>
+                                <button onclick="printStats()" class="btn-grad btn-primary mb-3">
+                                    <i class="fas fa-print"></i> پرینتکردنی ئامار
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h2 class="section-title"><i class="fas fa-book-open"></i> لیستی دەرسەکان</h2>
+                    <button onclick="addLesson()" class="btn-grad btn-primary mb-3"><i class="fas fa-plus-circle"></i> زیادکردنی دەرس</button>
+                    
+                    <div class="table-responsive">
+                        <table id="lessonTable" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ناوی دەرس</th>
+                                    <th>ژمارەی قوتابی غایب</th>
+                                    <th>کردارەکان</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- لیستی دەرسەکان لێرە دەخرێتەوە -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h2 class="section-title"><i class="fas fa-user-graduate"></i> لیستی قوتابیان</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="searchInput"><i class="fas fa-search"></i> گەڕان بۆ ناوی قوتابی:</label>
+                                <input type="text" id="searchInput" class="form-control" placeholder="گەڕان بۆ ناوی قوتابی...">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="selectedLessonDisplay" class="text-center">
+                                <strong>دەرسی هەڵبژێردراو: </strong>
+                                <span id="currentLessonSpan" class="no-lesson">هیچ دەرسێک هەڵنەبژێردراوە</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button onclick="sendReportToFormspree()" class="btn-grad btn-info mb-3">
+                            <i class="fas fa-paper-plane"></i> ناردنی ڕاپۆرت بۆ ئیمەیڵ
+                        </button>
+                        <button onclick="printStudentTable()" class="btn-grad btn-primary mb-3">
+                            <i class="fas fa-print"></i> پرینتکردنی لیستی قوتابیان
+                        </button>
+                        <button onclick="exportToExcel()" class="btn-grad btn-success mb-3">
+                            <i class="fas fa-file-excel"></i> هەڵگرتنی Excel
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="studentTable" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ناو</th>
+                                    <th>کۆلێژ</th>
+                                    <th>بەش</th>
+                                    <th>گروپ</th>
+                                    <th>ژمارەی غیاب (ئەم دەرسە)</th>
+                                    <th>تێبینییەکان</th>
+                                    <th>کردارەکان</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- لیستی قوتابیان لێرە دەخرێتەوە -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script>
-        // دروستکردنی تەنۆلکەکان
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                const size = Math.random() * 20 + 5;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                const animationDuration = Math.random() * 20 + 10;
-                particle.style.animationDuration = `${animationDuration}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
-        // فەرمانی چوونەژوورەوە
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
-            const successMessage = document.getElementById('successMessage');
-            
-            // پشکنینی ناوی بەکارهێنەر و تێپەڕەوشە
-            if (username === 'admin' && password === 'password') {
-                successMessage.style.display = 'block';
-                errorMessage.style.display = 'none';
-                
-                // دوای ١.٥ چرکە دەچینە سەر پەڕەی تر
-                setTimeout(function() {
-                    window.location.href = 'accounting.html'; // ناوی فایلەکە بگۆڕە بە پێی ئەوەی دەتەوێت
-                }, 1500);
-            } else {
-                errorMessage.style.display = 'block';
-                successMessage.style.display = 'none';
-            }
-        });
-        
-        // دروستکردنی تەنۆلکەکان کاتێک پەڕە بار دەبێت
-        window.addEventListener('load', createParticles);
-    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
