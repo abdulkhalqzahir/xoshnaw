@@ -1,339 +1,1534 @@
 <!DOCTYPE html>
-<html lang="ku">
+<html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سیستەمی غیاباتی قوتابیان - کۆلێژی کارگێری و ئابووری</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <title>شەیدا خۆشناو</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        :root {
+            --primary-dark: #0a1929;
+            --secondary-dark: #1a2c3f;
+            --accent-color: #00d09c;
+            --accent-light: #4dffd2;
+            --accent-secondary: #ff6b9d;
+            --text-primary: #f5f5f7;
+            --text-secondary: #b0b0b9;
+            --border-color: #2a3d52;
+            --card-bg: rgba(26, 44, 63, 0.8);
+            --shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+            --gradient-bg: linear-gradient(135deg, #0a1929 0%, #0c1f33 50%, #1a2c3f 100%);
+        }
+
+        body {
+            background: var(--gradient-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 208, 156, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 107, 157, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--secondary-dark);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            background-color: rgba(26, 44, 63, 0.9);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .logo i {
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-color);
+            background-color: rgba(0, 208, 156, 0.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-dark), #0c1f33);
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="40" stroke="rgba(0, 208, 156, 0.1)" stroke-width="0.5"/><circle cx="50" cy="50" r="30" stroke="rgba(0, 208, 156, 0.1)" stroke-width="0.5"/><circle cx="50" cy="50" r="20" stroke="rgba(0, 208, 156, 0.1)" stroke-width="0.5"/><circle cx="50" cy="50" r="10" stroke="rgba(0, 208, 156, 0.1)" stroke-width="0.5"/></svg>');
+            background-size: 100px 100px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--text-secondary);
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background-color: var(--secondary-dark);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: var(--shadow);
+            border-right: 4px solid var(--accent-secondary);
+            backdrop-filter: blur(10px);
+            background-color: rgba(26, 44, 63, 0.9);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-secondary), var(--accent-color));
+        }
+
+        .control-panel h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--accent-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group input, .input-group select {
+            padding: 12px 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 208, 156, 0.2);
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .input-group input[type="number"] {
+            width: 100%;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-light));
+            color: var(--primary-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 208, 156, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, var(--accent-secondary), #ff8ab4);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-light);
+            border: 2px solid var(--accent-light);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(77, 255, 210, 0.1);
+            box-shadow: 0 0 10px rgba(77, 255, 210, 0.3);
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: var(--shadow);
+            border-right: 4px solid var(--accent-color);
+            backdrop-filter: blur(10px);
+            background-color: rgba(26, 44, 63, 0.9);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+        }
+
+        .results-panel h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border-right: 3px solid var(--accent-light);
+            transition: var(--transition);
+        }
+
+        .result-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-item h4 {
+            color: var(--accent-light);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .result-unit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-right: 5px;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background-color: var(--secondary-dark);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            background-color: rgba(26, 44, 63, 0.9);
+        }
+
+        .chart-container h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-wrapper {
+            height: 400px;
+            width: 100%;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        /* Data Tables */
+        .data-tables {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .data-table {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            background-color: rgba(26, 44, 63, 0.9);
+            transition: var(--transition);
+        }
+
+        .data-table:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .data-table h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: var(--accent-light);
+            padding: 15px;
+            text-align: right;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            text-align: right;
+        }
+
+        table tr:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-light);
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-tables {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .mobile-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--secondary-dark);
+                padding: 20px;
+                box-shadow: var(--shadow);
+                z-index: 99;
+                border-radius: 0 0 10px 10px;
+            }
+            
+            .mobile-menu.active {
+                display: block;
+            }
+            
+            .mobile-menu ul {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero {
+                padding: 50px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-wrapper {
+                height: 300px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .control-panel, .results-panel, .chart-container, .data-table {
+            animation: fadeIn 0.8s ease-out;
+        }
+    </style>
 </head>
 <body>
-
-    <div class="container">
-        <!-- فۆرمی چوونەژوورەوە -->
-        <div id="loginForm" class="card">
-            <div class="card-header text-center">
-                <h4><i class="fas fa-lock"></i> چوونەژوورەوە بۆ سیستەمی غیاباتی قوتابیان</h4>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>لێکۆڵینەوەی گاما بە شێوەیەکی کارا</span>
             </div>
-            <div class="card-body">
-                <div class="logo-container">
-                    <i class="fas fa-graduation-cap" style="font-size: 90px; color: var(--light-purple);"></i>
+            <nav>
+                <ul>
+                    <li><a href="#calculator" class="active"><i class="fas fa-calculator"></i> ژمێرەر</a></li>
+                    <li><a href="#visualizer"><i class="fas fa-chart-bar"></i> پیشاندان</a></li>
+                    <li><a href="#data"><i class="fas fa-database"></i> شیکاری داتا</a></li>
+                    <li><a href="#results"><i class="fas fa-clipboard-list"></i> ئەنجامەکان</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="#calculator"><i class="fas fa-calculator"></i> ژمێرەر</a></li>
+                <li><a href="#visualizer"><i class="fas fa-chart-bar"></i> پیشاندان</a></li>
+                <li><a href="#data"><i class="fas fa-database"></i> شیکاری داتا</a></li>
+                <li><a href="#results"><i class="fas fa-clipboard-list"></i> ئەنجامەکان</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+             <h1>    شەیدا ئازاد خۆشناو</h1>
+             <br>
+            <h1>ژمێرەری کارا لە بڵاویکردنەوەی گاما</h1>
+            <p>پارامەترەکانی خۆت داخڵ بکە، ئەگەرەکان ژمێرە بکە، بڵاوکردنەوەکان پشان دەدات، و داتا بە شێوەیەکی ڕاستەوخۆ شیکار دەکات. ئامرازێکی تەواو بۆ لێکۆڵینەوەی بڵاویکردنەوەی گاما.</p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator">
+        <div class="container">
+            <div class="control-panel">
+                <h3><i class="fas fa-sliders-h"></i> ژمێرەری بڵاویکردنەوەی گاما</h3>
+                
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="shapeParam"><i class="fas fa-shapes"></i> پارامەتری شێوە (α)</label>
+                        <input type="number" id="shapeParam" min="0.1" step="0.1" value="2.0" placeholder="پارامەتری شێوە داخڵ بکە">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="scaleParam"><i class="fas fa-ruler"></i> پارامەتری پێوانە (β)</label>
+                        <input type="number" id="scaleParam" min="0.1" step="0.1" value="1.0" placeholder="پارامەتری پێوانە داخڵ بکە">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="calcType"><i class="fas fa-calculator"></i> جۆری ژمێرەکردن</label>
+                        <select id="calcType">
+                            <option value="pdf">چڕی ئەگەرە (PDF)</option>
+                            <option value="cdf">کۆکردنەوەی ئەگەرە (CDF)</option>
+                            <option value="quantile">کوانتایل (CDF پێچەوانە)</option>
+                            <option value="moments">مۆمێنتەکان (ڕادە، گۆڕان، هتد)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="xValue"><i class="fas fa-hashtag"></i> بەهای X / ئەگەرە</label>
+                        <input type="number" id="xValue" min="0" step="0.01" value="1.5" placeholder="بەهای x یان ئەگەرە داخڵ بکە">
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="username"><i class="fas fa-user"></i> ناوی بەکارهێنەر:</label>
-                    <input type="text" id="username" class="form-control" placeholder="ناوی بەکارهێنەر">
+                <div class="button-group">
+                    <button class="btn btn-primary" id="calculateBtn">
+                        <i class="fas fa-calculator"></i> ژمێرە بکە
+                    </button>
+                    <button class="btn btn-secondary" id="generateRandomBtn">
+                        <i class="fas fa-random"></i> دروستکردنی داتای هەڕەمەکی
+                    </button>
+                    <button class="btn btn-outline" id="clearBtn">
+                        <i class="fas fa-trash-alt"></i> سڕینەوەی هەمووی
+                    </button>
+                    <button class="btn btn-outline" id="saveBtn">
+                        <i class="fas fa-save"></i> پاشەکەوتکردنی ئەنجامەکان
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label for="password"><i class="fas fa-key"></i> وشەی نهێنی:</label>
-                    <input type="password" id="password" class="form-control" placeholder="وشەی نهێنی">
-                </div>
-                <button id="loginButton" class="btn-grad btn-primary btn-block">
-                    <i class="fas fa-sign-in-alt"></i> چوونەژوورەوە
-                </button>
-                <div id="loginError" class="alert alert-danger mt-3" style="display: none;"></div>
             </div>
-        </div>
-
-        <!-- ناوەڕۆکی سەرەکی (لە سەرەتادا شاردراوەتەوە) -->
-        <div id="mainContent" style="display: none;">
-            <div class="welcome-header">
-                <div class="logo-container">
-                    <div style="width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; color: var(--light-purple); font-size: 14px; text-align: center;">
-                        <i class="fas fa-graduation-cap" style="font-size: 90px;"></i>
+            
+            <div class="results-panel">
+                <h3><i class="fas fa-chart-pie"></i> ئەنجامەکانی ژمێرەکردن</h3>
+                
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h4><i class="fas fa-calculator"></i> بەهای PDF</h4>
+                        <div class="result-value" id="pdfResult">0.1920</div>
+                        <span class="result-unit">f(x)</span>
                     </div>
-                </div>
-                <h1>سیستەمی غیاباتی قوتابیان</h1>
-                <div class="welcome-message">
-                    <p>بەخێربێیت <span class="teacher-name" id="teacherNameDisplay">مامۆستای بەڕێز</span></p>
-                    <p>تکایە بە وردی کار لەسەر غیابی قوتابیان بکە</p>
-                </div>
-                <p>زانکۆی سەلاحەدین - هەولێر</p>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-user-plus"></i> فۆرمی زیادکردنی قوتابی
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="collegeSelect"><i class="fas fa-building"></i> هەڵبژاردنی کۆلێژ:</label>
-                                        <select id="collegeSelect" class="form-control">
-                                            <option value="کارگێری و ئابووری">کۆلێژی کارگێری و ئابووری</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="stageSelect"><i class="fas fa-graduation-cap"></i> هەڵبژاردنی قۆناغ:</label>
-                                        <select id="stageSelect" class="form-control">
-                                            <option value="1">قۆناغی 1</option>
-                                            <option value="2">قۆناغی 2</option>
-                                            <option value="3">قۆناغی 3</option>
-                                            <option value="4">قۆناغی 4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="departmentSelect"><i class="fas fa-book"></i> هەڵبژاردنی بەش:</label>
-                                        <select id="departmentSelect" class="form-control">
-                                            <!-- بەشەکان بەپێی کۆلێژ دەگۆڕدرێن -->
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="groupSelect"><i class="fas fa-users"></i> هەڵبژاردنی گروپ:</label>
-                                        <select id="groupSelect" class="form-control">
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="studentName"><i class="fas fa-user"></i> ناوی قوتابی:</label>
-                                        <input type="text" id="studentName" class="form-control" placeholder="ناوی قوتابی بنووسە">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-wrap justify-content-center mt-4">
-                                <button id="saveButton" class="btn-grad btn-success mb-3 flex-grow-1 mx-2"><i class="fas fa-save"></i> تۆمارکردن</button>
-                                <button onclick="clearAllData()" class="btn-grad btn-danger mb-3 flex-grow-1 mx-2"><i class="fas fa-trash-alt"></i> سڕینەوەی هەموو داتاکان</button>
-                                <button onclick="logout()" class="btn-grad btn-warning mb-3 flex-grow-1 mx-2"><i class="fas fa-sign-out-alt"></i> چوونەدەرەوە</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ناوەڕۆکی نوێ: هەڵگرتنی فایل -->
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-file-import"></i> هەڵگرتنی قوتابیان لە فایلی Excel
-                        </div>
-                        <div class="card-body">
-                            <div class="file-upload-area" id="fileUploadArea">
-                                <div class="file-upload-icon">
-                                    <i class="fas fa-file-excel"></i>
-                                </div>
-                                <h4>فایلی Excel هەڵبگرە ئەنجامی بینە</h4>
-                                <p>فایلەکە پێویستە ستوونی ناوی تێدابێت</p>
-                                <input type="file" id="fileInput" accept=".xlsx, .xls" style="display: none;">
-                                <button class="btn-grad btn-primary" onclick="document.getElementById('fileInput').click()">
-                                    <i class="fas fa-upload"></i> هەڵگرتنی فایل
-                                </button>
-                            </div>
-                            
-                            <div id="importSummary" class="import-summary" style="display: none;">
-                                <h5>کۆی گشتی:</h5>
-                                <p class="import-success" id="importSuccess">٠ قوتابی بە سەرکەوتوویی تۆمارکران</p>
-                                <p class="import-error" id="importError">٠ هەڵە ڕوویدا</p>
-                            </div>
-                            
-                            <div class="text-center mt-4">
-                                <button onclick="exportTemplate()" class="btn-grad btn-warning mb-3">
-                                    <i class="fas fa-download"></i> هەڵگرتنی فەرمیتی Excel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- بەشی نوێ: ئاماری غیابەکان -->
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-chart-bar"></i> ئاماری غیابەکانی قوتابیان
-                        </div>
-                        <div class="card-body">
-                            <div class="row text-center">
-                                <div class="col-md-3">
-                                    <div class="stats-box">
-                                        <div class="stats-number" id="totalStudents">0</div>
-                                        <div>کۆی قوتابیان</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="stats-box">
-                                        <div class="stats-number" id="totalAbsences">0</div>
-                                        <div>کۆی غیابەکان</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="stats-box">
-                                        <div class="stats-number" id="avgAbsences">0.0</div>
-                                        <div>تێکڕای غیاب</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="stats-box">
-                                        <div class="stats-number" id="maxAbsences">0</div>
-                                        <div>زۆرترین غیاب</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- فیلتەرەکان -->
-                            <div class="row mt-4">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="statsLessonSelect"><i class="fas fa-book"></i> هەڵبژاردنی دەرس:</label>
-                                        <select id="statsLessonSelect" class="form-control">
-                                            <option value="all">هەموو دەرسەکان</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="statsDepartmentSelect"><i class="fas fa-building"></i> هەڵبژاردنی بەش:</label>
-                                        <select id="statsDepartmentSelect" class="form-control">
-                                            <option value="all">هەموو بەشەکان</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="statsGroupSelect"><i class="fas fa-users"></i> هەڵبژاردنی گروپ:</label>
-                                        <select id="statsGroupSelect" class="form-control">
-                                            <option value="all">هەموو گروپەکان</option>
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- خشتەی ئامار -->
-                            <div class="table-responsive mt-4">
-                                <table id="statsTable" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>پلە</th>
-                                            <th>ناوی قوتابی</th>
-                                            <th>بەش</th>
-                                            <th>گروپ</th>
-                                            <th>کۆی غیابەکان</th>
-                                            <th>وردەکاری غیاب</th>
-                                            <th>پێگە</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- داتاکان لێرە دەخرێنەوە -->
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <!-- دوگمەکانی هەڵگرتن -->
-                            <div class="text-center mt-4">
-                                <button onclick="exportStatsToExcel()" class="btn-grad btn-success mb-3">
-                                    <i class="fas fa-file-excel"></i> هەڵگرتنی ئامار بە Excel
-                                </button>
-                                <button onclick="printStats()" class="btn-grad btn-primary mb-3">
-                                    <i class="fas fa-print"></i> پرینتکردنی ئامار
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <h2 class="section-title"><i class="fas fa-book-open"></i> لیستی دەرسەکان</h2>
-                    <button onclick="addLesson()" class="btn-grad btn-primary mb-3"><i class="fas fa-plus-circle"></i> زیادکردنی دەرس</button>
                     
-                    <div class="table-responsive">
-                        <table id="lessonTable" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ناوی دەرس</th>
-                                    <th>ژمارەی قوتابی غایب</th>
-                                    <th>کردارەکان</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- لیستی دەرسەکان لێرە دەخرێتەوە -->
-                            </tbody>
-                        </table>
+                    <div class="result-item">
+                        <h4><i class="fas fa-chart-line"></i> بەهای CDF</h4>
+                        <div class="result-value" id="cdfResult">0.4422</div>
+                        <span class="result-unit">F(x)</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h4><i class="fas fa-bullseye"></i> ڕادە</h4>
+                        <div class="result-value" id="meanResult">2.00</div>
+                        <span class="result-unit">α/β</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h4><i class="fas fa-expand-arrows-alt"></i> گۆڕان</h4>
+                        <div class="result-value" id="varianceResult">2.00</div>
+                        <span class="result-unit">α/β²</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <h2 class="section-title"><i class="fas fa-user-graduate"></i> لیستی قوتابیان</h2>
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="searchInput"><i class="fas fa-search"></i> گەڕان بۆ ناوی قوتابی:</label>
-                                <input type="text" id="searchInput" class="form-control" placeholder="گەڕان بۆ ناوی قوتابی...">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div id="selectedLessonDisplay" class="text-center">
-                                <strong>دەرسی هەڵبژێردراو: </strong>
-                                <span id="currentLessonSpan" class="no-lesson">هیچ دەرسێک هەڵنەبژێردراوە</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="text-center mt-4">
-                        <button onclick="sendReportToFormspree()" class="btn-grad btn-info mb-3">
-                            <i class="fas fa-paper-plane"></i> ناردنی ڕاپۆرت بۆ ئیمەیڵ
-                        </button>
-                        <button onclick="printStudentTable()" class="btn-grad btn-primary mb-3">
-                            <i class="fas fa-print"></i> پرینتکردنی لیستی قوتابیان
-                        </button>
-                        <button onclick="exportToExcel()" class="btn-grad btn-success mb-3">
-                            <i class="fas fa-file-excel"></i> هەڵگرتنی Excel
-                        </button>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table id="studentTable" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ناو</th>
-                                    <th>کۆلێژ</th>
-                                    <th>بەش</th>
-                                    <th>گروپ</th>
-                                    <th>ژمارەی غیاب (ئەم دەرسە)</th>
-                                    <th>تێبینییەکان</th>
-                                    <th>کردارەکان</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- لیستی قوتابیان لێرە دەخرێتەوە -->
-                            </tbody>
-                        </table>
-                    </div>
+                
+                <div class="input-group" style="max-width: 400px; margin-top: 20px;">
+                    <label for="customCalculation"><i class="fas fa-code"></i> ژمێرەکردنی تایبەت</label>
+                    <input type="text" id="customCalculation" placeholder="بۆ نموونە: P(1.2 < X < 3.4)" value="P(1.2 < X < 3.4)">
+                    <button class="btn btn-primary" id="customCalcBtn" style="margin-top: 10px;">
+                        <i class="fas fa-play"></i> هەڵسەنگاندنی تایبەت
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Visualizer Section -->
+    <section id="visualizer">
+        <div class="container">
+            <div class="chart-container">
+                <h3><i class="fas fa-chart-line"></i> پیشاندەری بڵاویکردنەوەی گاما</h3>
+                <p>پیشاندانی گۆڕانی بڵاویکردنەوەی گاما بە پارامەترە جیاوازەکانەوە. دەتوانیت چەندین بڵاویکردنەوە بۆ بەراوردکردن زیاد بکەیت.</p>
+                
+                <div class="chart-wrapper">
+                    <canvas id="gammaChart"></canvas>
+                </div>
+                
+                <div class="button-group" style="margin-top: 20px;">
+                    <button class="btn btn-outline" id="addDistributionBtn">
+                        <i class="fas fa-plus"></i> زیادکردنی بڵاویکردنەوەیەکی تر
+                    </button>
+                    <button class="btn btn-outline" id="resetChartBtn">
+                        <i class="fas fa-redo"></i> ڕێکخستنەوەی خشتە
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Analysis Section -->
+    <section id="data">
+        <div class="container">
+            <div class="control-panel">
+                <h3><i class="fas fa-database"></i> ئامرازەکانی شیکاری داتا</h3>
+                
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="dataInput"><i class="fas fa-keyboard"></i> داتا داخڵ بکە (بە کۆما جیاکراوە)</label>
+                        <input type="text" id="dataInput" placeholder="بۆ نموونە: 1.2, 2.3, 3.1, 4.5, 5.0" value="1.2, 2.3, 3.1, 4.5, 5.0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="analysisType"><i class="fas fa-chart-bar"></i> جۆری شیکاری</label>
+                        <select id="analysisType">
+                            <option value="fit">لکاندنی بڵاویکردنەوەی گاما</option>
+                            <option value="descriptive">ئاماری وەسفی</option>
+                            <option value="goodness">تاقیکردنەوەی باشی لکاندن</option>
+                            <option value="compare">بەراوردکردن لەگەڵ تیۆری</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-primary" id="analyzeDataBtn">
+                        <i class="fas fa-chart-bar"></i> شیکاری داتا
+                    </button>
+                    <button class="btn btn-secondary" id="generateSampleBtn">
+                        <i class="fas fa-vial"></i> دروستکردنی نموونە
+                    </button>
+                    <button class="btn btn-outline" id="exportDataBtn">
+                        <i class="fas fa-download"></i> هەناردەکردنی داتا
+                    </button>
+                </div>
+            </div>
+            
+            <div class="data-tables">
+                <div class="data-table">
+                    <h3><i class="fas fa-table"></i> کۆکردنەوەی داتا</h3>
+                    <table id="dataSummaryTable">
+                        <thead>
+                            <tr>
+                                <th>ئامار</th>
+                                <th>بەها</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>قەبارەی نموونە</td>
+                                <td id="sampleSize">5</td>
+                            </tr>
+                            <tr>
+                                <td>ڕادە</td>
+                                <td id="sampleMean">3.22</td>
+                            </tr>
+                            <tr>
+                                <td>گۆڕان</td>
+                                <td id="sampleVariance">2.19</td>
+                            </tr>
+                            <tr>
+                                <td>خەمڵاندنی α</td>
+                                <td id="estimatedAlpha">-</td>
+                            </tr>
+                            <tr>
+                                <td>خەمڵاندنی β</td>
+                                <td id="estimatedBeta">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="data-table">
+                    <h3><i class="fas fa-history"></i> مێژووی ژمێرەکردن</h3>
+                    <table id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>کات</th>
+                                <th>جۆر</th>
+                                <th>پارامەترەکان</th>
+                                <th>ئەنجام</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyBody">
+                            <!-- History rows will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+                <i class="fas fa-chart-line"></i>
+                <span>لێکۆڵینەوەی گاما بە شێوەیەکی کارا</span>
+            </div>
+            <p>ئامرازێکی پێشکەوتووی کارا بۆ شیکاری و لێکۆڵینەوەی بڵاویکردنەوەی گاما</p>
+            <div class="footer-links">
+                <a href="#calculator">ژمێرەر</a>
+                <a href="#visualizer">پیشاندان</a>
+                <a href="#data">شیکاری داتا</a>
+                <a href="#results">ئەنجامەکان</a>
+            </div>
+            <p style="margin-top: 30px; font-size: 0.9rem; color: var(--text-secondary);">
+                دروستکراوە بە HTML, CSS, و JavaScript | هەموو ژمێرەکان بە شێوەیەکی ڕاستەوخۆ ئەنجام دەدرێن
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Active navigation
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a, .mobile-menu a');
+            
+            let currentSection = '';
+            const scrollPos = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    currentSection = '#' + section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveNav);
+        window.addEventListener('load', updateActiveNav);
+        
+        // Gamma distribution functions
+        class GammaDistribution {
+            // Lanczos approximation for Gamma function
+            static gamma(z) {
+                const g = 7;
+                const p = [
+                    0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+                    771.32342877765313, -176.61502916214059, 12.507343278686905,
+                    -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7
+                ];
+                
+                if (z < 0.5) {
+                    return Math.PI / (Math.sin(Math.PI * z) * this.gamma(1 - z));
+                }
+                
+                z -= 1;
+                let x = p[0];
+                for (let i = 1; i < p.length; i++) {
+                    x += p[i] / (z + i);
+                }
+                const t = z + g + 0.5;
+                return Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x;
+            }
+            
+            // Lower incomplete Gamma function
+            static lowerIncompleteGamma(s, x) {
+                // Series approximation
+                let sum = 0;
+                let term = 1 / s;
+                let n = 0;
+                
+                while (Math.abs(term) > 1e-15 && n < 1000) {
+                    sum += term;
+                    n++;
+                    term = term * x / (s + n);
+                }
+                
+                return Math.pow(x, s) * Math.exp(-x) * sum;
+            }
+            
+            // Gamma PDF
+            static pdf(x, alpha, beta) {
+                if (x <= 0) return 0;
+                return (Math.pow(beta, alpha) / this.gamma(alpha)) * Math.pow(x, alpha - 1) * Math.exp(-beta * x);
+            }
+            
+            // Gamma CDF using incomplete Gamma function
+            static cdf(x, alpha, beta) {
+                if (x <= 0) return 0;
+                return this.lowerIncompleteGamma(alpha, beta * x) / this.gamma(alpha);
+            }
+            
+            // Generate random Gamma variable
+            static random(alpha, beta) {
+                // Marsaglia and Tsang method for alpha >= 1
+                if (alpha < 1) {
+                    // Use transformation for alpha < 1
+                    const u = Math.random();
+                    const x = this.random(alpha + 1, beta);
+                    return x * Math.pow(u, 1 / alpha);
+                }
+                
+                const d = alpha - 1/3;
+                const c = 1 / Math.sqrt(9 * d);
+                
+                while (true) {
+                    let v = 0;
+                    let x = 0;
+                    
+                    do {
+                        x = this.normalRandom();
+                        v = 1 + c * x;
+                    } while (v <= 0);
+                    
+                    v = v * v * v;
+                    const u = Math.random();
+                    
+                    if (u < 1 - 0.0331 * x * x * x * x) {
+                        return d * v / beta;
+                    }
+                    
+                    if (Math.log(u) < 0.5 * x * x + d * (1 - v + Math.log(v))) {
+                        return d * v / beta;
+                    }
+                }
+            }
+            
+            // Standard normal random variable
+            static normalRandom() {
+                let u = 0, v = 0;
+                while (u === 0) u = Math.random();
+                while (v === 0) v = Math.random();
+                return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+            }
+            
+            // Calculate mean
+            static mean(alpha, beta) {
+                return alpha / beta;
+            }
+            
+            // Calculate variance
+            static variance(alpha, beta) {
+                return alpha / (beta * beta);
+            }
+            
+            // Calculate skewness
+            static skewness(alpha) {
+                return 2 / Math.sqrt(alpha);
+            }
+            
+            // Calculate mode
+            static mode(alpha, beta) {
+                if (alpha < 1) return 0;
+                return (alpha - 1) / beta;
+            }
+            
+            // Estimate parameters from data (method of moments)
+            static estimateParameters(data) {
+                const n = data.length;
+                const mean = data.reduce((sum, val) => sum + val, 0) / n;
+                const variance = data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / n;
+                
+                const alpha = Math.pow(mean, 2) / variance;
+                const beta = mean / variance;
+                
+                return { alpha, beta };
+            }
+        }
+        
+        // Chart.js implementation
+        let gammaChart;
+        let chartDatasets = [];
+        
+        function initializeChart() {
+            const ctx = document.getElementById('gammaChart').getContext('2d');
+            
+            // Initial dataset
+            chartDatasets = [{
+                label: 'گاما(α=2.0, β=1.0)',
+                data: generateChartData(2.0, 1.0),
+                borderColor: '#00d09c',
+                backgroundColor: 'rgba(0, 208, 156, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 0
+            }];
+            
+            gammaChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: chartDatasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'x',
+                                color: '#b0b0b9'
+                            },
+                            grid: {
+                                color: 'rgba(42, 61, 82, 0.5)'
+                            },
+                            ticks: {
+                                color: '#b0b0b9'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'چڕی ئەگەرە f(x)',
+                                color: '#b0b0b9'
+                            },
+                            grid: {
+                                color: 'rgba(42, 61, 82, 0.5)'
+                            },
+                            ticks: {
+                                color: '#b0b0b9'
+                            },
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#f5f5f7',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(10, 25, 41, 0.9)',
+                            titleColor: '#00d09c',
+                            bodyColor: '#f5f5f7',
+                            borderColor: '#00d09c',
+                            borderWidth: 1
+                        }
+                    }
+                }
+            });
+            
+            updateChartData();
+        }
+        
+        function generateChartData(alpha, beta) {
+            const data = [];
+            const maxX = Math.min(20, (alpha / beta) * 4);
+            const step = maxX / 100;
+            
+            for (let x = 0; x <= maxX; x += step) {
+                const y = GammaDistribution.pdf(x, alpha, beta);
+                data.push({x: x, y: y});
+            }
+            
+            return data;
+        }
+        
+        function updateChartData() {
+            const alpha = parseFloat(document.getElementById('shapeParam').value);
+            const beta = parseFloat(document.getElementById('scaleParam').value);
+            
+            // Update first dataset
+            chartDatasets[0].label = `گاما(α=${alpha.toFixed(2)}, β=${beta.toFixed(2)})`;
+            chartDatasets[0].data = generateChartData(alpha, beta);
+            
+            gammaChart.update();
+        }
+        
+        function addDistributionToChart() {
+            const alpha = parseFloat(document.getElementById('shapeParam').value);
+            const beta = parseFloat(document.getElementById('scaleParam').value);
+            
+            // Generate random color
+            const colors = [
+                '#ff6b9d', '#ffa600', '#00b4ff', '#9d4edd', 
+                '#ffbd00', '#00cecb', '#ff6b6b', '#5a67d8'
+            ];
+            const color = colors[chartDatasets.length % colors.length];
+            
+            const newDataset = {
+                label: `گاما(α=${alpha.toFixed(2)}, β=${beta.toFixed(2)})`,
+                data: generateChartData(alpha, beta),
+                borderColor: color,
+                backgroundColor: color + '20',
+                borderWidth: 2,
+                fill: false,
+                tension: 0.4,
+                pointRadius: 0
+            };
+            
+            chartDatasets.push(newDataset);
+            gammaChart.data.datasets = chartDatasets;
+            gammaChart.update();
+        }
+        
+        // Calculator functions
+        function calculateGamma() {
+            const alpha = parseFloat(document.getElementById('shapeParam').value);
+            const beta = parseFloat(document.getElementById('scaleParam').value);
+            const x = parseFloat(document.getElementById('xValue').value);
+            const calcType = document.getElementById('calcType').value;
+            
+            if (isNaN(alpha) || isNaN(beta) || isNaN(x)) {
+                alert('تکایە ژمارە دروست بۆ هەموو پارامەترەکان داخڵ بکە');
+                return;
+            }
+            
+            let result = 0;
+            let resultText = '';
+            
+            switch(calcType) {
+                case 'pdf':
+                    result = GammaDistribution.pdf(x, alpha, beta);
+                    resultText = `f(${x}) = ${result.toFixed(6)}`;
+                    document.getElementById('pdfResult').textContent = result.toFixed(4);
+                    break;
+                case 'cdf':
+                    result = GammaDistribution.cdf(x, alpha, beta);
+                    resultText = `F(${x}) = ${result.toFixed(6)}`;
+                    document.getElementById('cdfResult').textContent = result.toFixed(4);
+                    break;
+                case 'quantile':
+                    // For inverse CDF we need numerical approximation
+                    result = approximateQuantile(x, alpha, beta);
+                    resultText = `Q(${x}) = ${result.toFixed(6)}`;
+                    break;
+                case 'moments':
+                    const mean = GammaDistribution.mean(alpha, beta);
+                    const variance = GammaDistribution.variance(alpha, beta);
+                    const skewness = GammaDistribution.skewness(alpha);
+                    const mode = GammaDistribution.mode(alpha, beta);
+                    
+                    document.getElementById('meanResult').textContent = mean.toFixed(2);
+                    document.getElementById('varianceResult').textContent = variance.toFixed(2);
+                    
+                    resultText = `ڕادە: ${mean.toFixed(4)}, گۆڕان: ${variance.toFixed(4)}, لێکچواندن: ${skewness.toFixed(4)}`;
+                    break;
+            }
+            
+            // Update moments regardless of calculation type
+            document.getElementById('meanResult').textContent = GammaDistribution.mean(alpha, beta).toFixed(2);
+            document.getElementById('varianceResult').textContent = GammaDistribution.variance(alpha, beta).toFixed(2);
+            
+            // Add to history
+            addToHistory(calcType, {alpha, beta, x}, result);
+            
+            // Update chart
+            updateChartData();
+        }
+        
+        function approximateQuantile(p, alpha, beta) {
+            // Simple bisection method for inverse CDF
+            if (p <= 0) return 0;
+            if (p >= 1) return 100; // Large value approximation
+            
+            let low = 0, high = 100;
+            let mid, fmid;
+            
+            for (let i = 0; i < 50; i++) {
+                mid = (low + high) / 2;
+                fmid = GammaDistribution.cdf(mid, alpha, beta);
+                
+                if (Math.abs(fmid - p) < 1e-6) {
+                    return mid;
+                }
+                
+                if (fmid < p) {
+                    low = mid;
+                } else {
+                    high = mid;
+                }
+            }
+            
+            return mid;
+        }
+        
+        function generateRandomData() {
+            const alpha = parseFloat(document.getElementById('shapeParam').value);
+            const beta = parseFloat(document.getElementById('scaleParam').value);
+            const n = 10; // Generate 10 random values
+            
+            let data = [];
+            for (let i = 0; i < n; i++) {
+                data.push(GammaDistribution.random(alpha, beta).toFixed(3));
+            }
+            
+            document.getElementById('dataInput').value = data.join(', ');
+            analyzeData();
+        }
+        
+        function analyzeData() {
+            const dataInput = document.getElementById('dataInput').value;
+            const analysisType = document.getElementById('analysisType').value;
+            
+            if (!dataInput.trim()) {
+                alert('تکایە هەندێک داتا بۆ شیکاری داخڵ بکە');
+                return;
+            }
+            
+            const data = dataInput.split(',').map(val => parseFloat(val.trim())).filter(val => !isNaN(val));
+            
+            if (data.length === 0) {
+                alert('هیچ ژمارەی دروست لە داتاکەدا نەدۆزرایەوە');
+                return;
+            }
+            
+            // Calculate descriptive statistics
+            const n = data.length;
+            const mean = data.reduce((sum, val) => sum + val, 0) / n;
+            const variance = data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / n;
+            
+            // Update data summary
+            document.getElementById('sampleSize').textContent = n;
+            document.getElementById('sampleMean').textContent = mean.toFixed(2);
+            document.getElementById('sampleVariance').textContent = variance.toFixed(2);
+            
+            // Estimate Gamma parameters
+            const params = GammaDistribution.estimateParameters(data);
+            document.getElementById('estimatedAlpha').textContent = params.alpha.toFixed(4);
+            document.getElementById('estimatedBeta').textContent = params.beta.toFixed(4);
+            
+            // Add to history
+            addToHistory('data_analysis', {dataLength: n, mean, variance}, `α=${params.alpha.toFixed(4)}, β=${params.beta.toFixed(4)}`);
+        }
+        
+        function addToHistory(type, params, result) {
+            const historyBody = document.getElementById('historyBody');
+            const now = new Date();
+            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            
+            let paramString = '';
+            if (type === 'pdf' || type === 'cdf') {
+                paramString = `α=${params.alpha}, β=${params.beta}, x=${params.x}`;
+            } else if (type === 'moments') {
+                paramString = `α=${params.alpha}, β=${params.beta}`;
+            } else if (type === 'data_analysis') {
+                paramString = `n=${params.dataLength}, μ=${params.mean.toFixed(2)}`;
+            }
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${timeString}</td>
+                <td>${type.toUpperCase()}</td>
+                <td>${paramString}</td>
+                <td>${result}</td>
+            `;
+            
+            historyBody.insertBefore(row, historyBody.firstChild);
+            
+            // Keep only last 10 entries
+            while (historyBody.children.length > 10) {
+                historyBody.removeChild(historyBody.lastChild);
+            }
+        }
+        
+        function evaluateCustomCalculation() {
+            const expression = document.getElementById('customCalculation').value;
+            
+            // Simple parsing for expressions like P(1.2 < X < 3.4)
+            const match = expression.match(/P\(([\d.]+)\s*[<>]\s*X\s*[<>]\s*([\d.]+)\)/i);
+            
+            if (match) {
+                const a = parseFloat(match[1]);
+                const b = parseFloat(match[2]);
+                const alpha = parseFloat(document.getElementById('shapeParam').value);
+                const beta = parseFloat(document.getElementById('scaleParam').value);
+                
+                const cdfA = GammaDistribution.cdf(a, alpha, beta);
+                const cdfB = GammaDistribution.cdf(b, alpha, beta);
+                const probability = Math.abs(cdfB - cdfA);
+                
+                alert(`P(${a} < X < ${b}) = ${probability.toFixed(6)}`);
+                addToHistory('custom', {expression}, probability.toFixed(6));
+            } else {
+                alert('ناتوانرێ دەربڕینەکە بخوێنرێتەوە. هەوڵ بدە شێواز: P(1.2 < X < 3.4)');
+            }
+        }
+        
+        function generateSample() {
+            const alpha = parseFloat(document.getElementById('shapeParam').value) || 2.0;
+            const beta = parseFloat(document.getElementById('scaleParam').value) || 1.0;
+            const n = 20; // Generate 20 samples
+            
+            let data = [];
+            for (let i = 0; i < n; i++) {
+                data.push(GammaDistribution.random(alpha, beta).toFixed(3));
+            }
+            
+            document.getElementById('dataInput').value = data.join(', ');
+            analyzeData();
+        }
+        
+        function exportData() {
+            const dataInput = document.getElementById('dataInput').value;
+            const blob = new Blob([dataInput], {type: 'text/plain'});
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'gamma_data.txt';
+            a.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        function saveResults() {
+            const alpha = parseFloat(document.getElementById('shapeParam').value);
+            const beta = parseFloat(document.getElementById('scaleParam').value);
+            const pdf = document.getElementById('pdfResult').textContent;
+            const cdf = document.getElementById('cdfResult').textContent;
+            const mean = document.getElementById('meanResult').textContent;
+            const variance = document.getElementById('varianceResult').textContent;
+            
+            const results = `
+ئەنجامەکانی بڵاویکردنەوەی گاما
+==========================
+پارامەترەکان: α = ${alpha}, β = ${beta}
+PDF: ${pdf}
+CDF: ${cdf}
+ڕادە: ${mean}
+گۆڕان: ${variance}
+دروستکراو: ${new Date().toLocaleString()}
+            `;
+            
+            const blob = new Blob([results], {type: 'text/plain'});
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'gamma_results.txt';
+            a.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        function clearAll() {
+            document.getElementById('shapeParam').value = '2.0';
+            document.getElementById('scaleParam').value = '1.0';
+            document.getElementById('xValue').value = '1.5';
+            document.getElementById('dataInput').value = '';
+            document.getElementById('customCalculation').value = 'P(1.2 < X < 3.4)';
+            
+            // Reset chart to single dataset
+            chartDatasets = [chartDatasets[0]];
+            gammaChart.data.datasets = chartDatasets;
+            updateChartData();
+            
+            // Clear history
+            document.getElementById('historyBody').innerHTML = '';
+            
+            // Reset results
+            calculateGamma();
+        }
+        
+        // Event Listeners
+        document.getElementById('calculateBtn').addEventListener('click', calculateGamma);
+        document.getElementById('generateRandomBtn').addEventListener('click', generateRandomData);
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+        document.getElementById('saveBtn').addEventListener('click', saveResults);
+        document.getElementById('customCalcBtn').addEventListener('click', evaluateCustomCalculation);
+        document.getElementById('addDistributionBtn').addEventListener('click', addDistributionToChart);
+        document.getElementById('resetChartBtn').addEventListener('click', clearAll);
+        document.getElementById('analyzeDataBtn').addEventListener('click', analyzeData);
+        document.getElementById('generateSampleBtn').addEventListener('click', generateSample);
+        document.getElementById('exportDataBtn').addEventListener('click', exportData);
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeChart();
+            calculateGamma();
+            analyzeData();
+        });
+        
+        // Update chart when parameters change
+        document.getElementById('shapeParam').addEventListener('input', function() {
+            calculateGamma();
+        });
+        
+        document.getElementById('scaleParam').addEventListener('input', function() {
+            calculateGamma();
+        });
+        
+        document.getElementById('xValue').addEventListener('input', function() {
+            calculateGamma();
+        });
+        
+        document.getElementById('calcType').addEventListener('change', function() {
+            calculateGamma();
+        });
+    </script>
 </body>
 </html>
